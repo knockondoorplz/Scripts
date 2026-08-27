@@ -1,0 +1,56 @@
+=========================================
+   AUTOHOTKEY CUSTOM SHORTCUTS
+=========================================
+[Add-LastInstalledToPath.ahk] -> #!p::
+[BatchCleanSelectedText.ahk] -> ^!l::
+[BatchCleanUpward.ahk] -> ^!k::
+[ClipAppend.ahk] -> ^+!c::
+[ClipAppend.ahk] -> ^+#c::
+[CurrentWindowNewPowershell.ahk] -> ^!t::
+[CurrentWindowNewPowershell.ahk] -> ^!a::
+[CurrentWindowPowershellAuto.ahk] -> ^!a::
+[DeleteCurrentWallpaper.ahk] -> ^+d::
+[FLComplexCurveMap.ahk] -> F1::
+[FLHelperScript.ahk] -> F1::Send {F8}
+[FLHelperScript.ahk] -> F2::Send !p
+[FLHelperScript.ahk] -> ^e::Send !f{down 7}{enter}
+[FLHelperScript.ahk] -> ^s::
+[FLHelperScript.ahk] -> F3::Send {F9}
+[FLHelperScript.ahk] -> F4::Send {F5}
+[FLRenameMixerTrack.ahk] -> F1:: ; Run this once you have your 3 Peak Controllers loaded on your 3 tracks
+[FLVisualLinker.ahk] -> F1::
+[Get-ChildItem -Recurse Move-Item.ahk] -> ^#m::
+[GitDiff.ahk] -> ^#!d::
+[HotkeParser.ahk] -> if (InStr(A_LoopReadLine, "::") && SubStr(LTrim(A_LoopReadLine), 1, 1) != ";")
+[HotkeyRemapShowDesktop.ahk] -> ~LAlt::
+[HotkeyRemapShowDesktop.ahk] -> LAlt & RAlt::
+[HotkeyRemapShowDesktop.ahk] -> RAlt & LAlt::
+[Minimal AHK Test.ahk] -> ^+`::
+[MoveTimeController.ahk] -> #!t::
+[MusicDownloader - Copy.ahk] -> +!p::
+[MusicDownloader.ahk] -> +!p::
+[PeekatdesktopLR.ahk] -> #!Left::
+[PeekatdesktopLR.ahk] -> #!Right::
+[RemoveStrippedFiles.ahk] -> if ([string]::IsNullOrWhiteSpace($rawArtist)) {
+[RemoveStrippedFiles.ahk] -> if ([string]::IsNullOrWhiteSpace($rawArtist) -and $_.Name -match ' - ') {
+[RemoveStrippedFiles.ahk] -> if (![string]::IsNullOrWhiteSpace($rawArtist)) {
+[RemoveStrippedFiles.ahk] -> $cleanRawArtist = [regex]::Replace($rawArtist, '[^\x20-\x7E]', '').Trim()
+[RemoveStrippedFiles.ahk] -> if ([string]::IsNullOrWhiteSpace($cleanRawArtist)) {
+[RemoveStrippedFiles.ahk] -> if ([string]::IsNullOrWhiteSpace($cleanArtist)) { $cleanArtist = "Unknown Artist" }
+[RestartExplorer.ahk] -> #!r::
+[RunExplorer.ahk] -> ^#!r::
+[RunMemoryFlush.ahk] -> #!m::
+[RunNascarahk.ahk] -> ^#!n::
+[RunNascarps1.ahk] -> ^#!f::
+[RunResetLastModifiedAHKScript.ahk] -> ^#!1::SwitchTheme(themeRain)
+[RunResetLastModifiedAHKScript.ahk] -> ^#!2::SwitchTheme(themeClouds)
+[RunResetLastModifiedAHKScript.ahk] -> ^#!3::SwitchTheme(themeRainClouds)
+[RunResetLastModifiedAHKScript.ahk] -> ^#!0::
+[SetOllamaControl.ahk] -> ^#!l::
+[SetRainyWallpaper.ahk] -> ^#!Numpad1::
+[SetRainyWallpaper.ahk] -> ^#!Numpad2::
+[SetRainyWallpaper.ahk] -> ^#!Numpad3::
+[SetRainyWallpaper.ahk] -> ^#!Numpad0::
+[stack_pngs_hotkey.ahk] -> ^!`::
+[stacktext_hotkey.ahk] -> ^+`::
+

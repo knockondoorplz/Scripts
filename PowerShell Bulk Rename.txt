@@ -1,0 +1,14 @@
+cd "C:\Users\brigi\Music\μюζικ\Igorrr\Amen"
+
+Get-ChildItem -Filter "[Crazy Town]*" | Rename-Item -NewName { $_.Name -replace '^\[Crazy Town\] ', '' }
+
+Get-ChildItem -File -Filter "*.mp3" |
+  Rename-Item -NewName {
+    $_.Name -replace '^\[[^\]]+\]\s*', ''
+  }
+
+What that regex does:
+
+^\[ = only at the start of the name, beginning with [
+[^\]]+ = any characters until the closing ]
+\]\s* = the ] and any spaces after it

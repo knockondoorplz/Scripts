@@ -1,0 +1,272 @@
+<!-- save as virescent-demo.html and open in a browser -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Virescent — energy-glyph demo</title>
+<style>
+  html,body{height:100%;margin:0;background:#0b0b10;overflow:hidden;font-family:system-ui;}
+  #ui {
+    position:absolute;left:8%;top:8%;width:84%;height:76%;
+    border-radius:10px;border:2px solid rgba(255,255,255,0.05);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.75), inset 0 0 30px rgba(255,255,255,0.02);
+    backdrop-filter: blur(6px);
+  }
+  #controls{position:fixed;right:12px;top:12px;color:#dfe6ff;opacity:.95}
+  button{display:block;margin:6px;padding:6px 10px;background:#131321;border:1px solid rgba(255,255,255,.06);color:#e6ecff;border-radius:6px}
+  canvas{position:absolute;left:0;top:0;pointer-events:none}
+  .hint{font-size:12px;color:#9aa7ff;opacity:.7;margin-top:8px}
+</style>
+</head>
+<body>
+<div id="ui"></div>
+<canvas id="c"></canvas>
+
+<div id="controls">
+  <button id="modeBtn">Mode: edge-trace</button>
+  <button id="patternBtn">Pattern: none</button>
+  <button id="morseBtn">Morse: off</button>
+  <div class="hint">Click inside the framed area to simulate "task switch" dash.</div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d', { alpha: true });
+const ui = document.getElementById('ui');
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* --- CONFIG --- */
+let mode = 'edge'; // edge | wander | pattern
+let pattern = 'none'; // none | butterfly | fractal
+let morse = false;
+
+/* Glyph state */
+const glyph = {
+  x: 0, y: 0,
+  vx: 0, vy: 0,
+  speed: 650,         // px per second nominal
+  tail: [],           // points for tail
+  tailLen: 22,
+  glow: 1.0,
+  modeTimer: 0,
+  dashing: false
+};
+
+/* Window-frame bounds to trace (simulate active window) */
+function getFrameRect() {
+  // Use the ui element as our simulated window
+  const r = ui.getBoundingClientRect();
+  return { x: r.left, y: r.top, w: r.width, h: r.height };
+}
+
+/* helpers */
+function lerp(a,b,t){return a + (b-a)*t}
+function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function clamp(v,a,b){return Math.max(a, Math.min(b, v));}
+
+/* Path builders */
+function perimeterPoints(rect, density=120){
+  const p = [];
+  const {x,y,w,h} = rect;
+  // build points around the rectangle clockwise
+  const seg = Math.round(density/4);
+  for(let i=0;i<seg;i++) p.push({x:x + i*(w/seg), y:y});
+  for(let i=0;i<seg;i++) p.push({x:x+w, y:y + i*(h/seg)});
+  for(let i=0;i<seg;i++) p.push({x:x + w - i*(w/seg), y:y+h});
+  for(let i=0;i<seg;i++) p.push({x:x, y:y + h - i*(h/seg)});
+  return p;
+}
+
+/* Patterns */
+function butterflyPath(center, t) {
+  // parametric "butterfly-ish" curve (stylized)
+  const pts = [];
+  for(let i=0;i<200;i++){
+    const u = i/200 * Math.PI*2;
+    const r = Math.sin(2*u)*1.6 + Math.sin(6*u)*0.6;
+    const x = center.x + Math.cos(u + t)*80*r;
+    const y = center.y + Math.sin(u + t)*60*r;
+    pts.push({x,y});
+  }
+  return pts;
+}
+function fractalPath(center, depth=4) {
+  // simple recursive-ish swirling points (not a full fractal; just flavor)
+  const pts = [];
+  const max = 400;
+  for(let i=0;i<max;i++){
+    const a = i/max * Math.PI*8;
+    const r = (i/max)*220 * Math.sin(a*0.3) * 0.9;
+    pts.push({x:center.x + Math.cos(a)*r, y:center.y + Math.sin(a)*r});
+  }
+  return pts;
+}
+
+/* Move mechanics */
+let last = performance.now();
+function step(now){
+  const dt = Math.min(0.06,(now - last)/1000);
+  last = now;
+  const rect = getFrameRect();
+
+  // behavior switching (idle wander vs edge trace vs pattern)
+  glyph.modeTimer += dt;
+  if(mode === 'edge'){
+    // follow a point moving along perimeter
+    const perim = perimeterPoints(rect, 200);
+    const t = (now/2000) % perim.length;
+    const idx = Math.floor(t);
+    const target = perim[idx];
+    followTarget(target, dt);
+  } else if(mode === 'wander'){
+    // random drift inside rect, prefer edges
+    if(!glyph._wanderTarget || distance(glyph, glyph._wanderTarget)<6 || glyph.modeTimer>3.5){
+      glyph._wanderTarget = {
+        x: rect.x + Math.random()*(rect.w),
+        y: rect.y + Math.random()*(rect.h)
+      };
+      glyph.modeTimer = 0;
+    }
+    followTarget(glyph._wanderTarget, dt);
+  } else if(mode === 'pattern'){
+    // follow pattern path centered on rect center
+    const center = {x: rect.x + rect.w/2, y: rect.y + rect.h/2};
+    const t = now/1200;
+    let pts = (pattern==='butterfly') ? butterflyPath(center,t) :
+              (pattern==='fractal') ? fractalPath(center) : [];
+    if(pts.length){
+      const idx = Math.floor((t*0.2)%pts.length);
+      const target = pts[idx];
+      followTarget(target, dt);
+    }
+  }
+
+  // tail management
+  glyph.tail.unshift({x:glyph.x, y:glyph.y, t:now});
+  if(glyph.tail.length > glyph.tailLen) glyph.tail.pop();
+
+  // glow decay
+  glyph.glow = lerp(glyph.glow, glyph.dashing ? 2.0 : 0.9, dt*4);
+
+  render();
+  requestAnimationFrame(step);
+}
+
+function followTarget(target, dt){
+  const dx = target.x - glyph.x;
+  const dy = target.y - glyph.y;
+  const dist = Math.hypot(dx,dy) || 1;
+  const maxspeed = glyph.dashing ? glyph.speed*3 : glyph.speed;
+  const desiredVx = (dx/dist) * maxspeed;
+  const desiredVy = (dy/dist) * maxspeed;
+  // smooth velocity (lag)
+  glyph.vx = lerp(glyph.vx, desiredVx, dt*6);
+  glyph.vy = lerp(glyph.vy, desiredVy, dt*6);
+  glyph.x += glyph.vx * dt;
+  glyph.y += glyph.vy * dt;
+}
+
+/* draw glow tail + head */
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // faint full-screen noise vignette (tasteful)
+  // draw tail as trail of fading plasma
+  const now = performance.now();
+  for(let i=0;i<glyph.tail.length;i++){
+    const p = glyph.tail[i];
+    const age = (now - p.t)/1000;
+    const fade = clamp(1 - (i/glyph.tail.length) - age*0.3, 0, 1);
+    if(fade<=0) continue;
+    // color ramps
+    const hue = 190 + i*1.2 + Math.sin((i/6)+now/800)*6;
+    ctx.beginPath();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = `hsla(${hue}, 90%, ${40 + fade*18}%, ${0.14 * fade * glyph.glow})`;
+    ctx.arc(p.x, p.y, 10 + i*0.6, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // drawing the "comma" head and electric filaments
+  ctx.globalCompositeOperation = 'lighter';
+  // filament noise
+  for(let s=0;s<6;s++){
+    const jitter = (s/6)*6;
+    ctx.beginPath();
+    ctx.moveTo(glyph.x, glyph.y);
+    for(let k=0;k<6;k++){
+      const a = k/6*Math.PI*2 + s*0.9;
+      const rx = glyph.x + Math.cos(a+performance.now()/400 + s)* (6 + k*1.2);
+      const ry = glyph.y + Math.sin(a+performance.now()/400 + s)* (6 + k*0.9);
+      ctx.lineTo(rx + Math.sin(k*1.7)*jitter, ry + Math.cos(k*1.3)*jitter);
+    }
+    ctx.strokeStyle = `hsla(${200 + s*6}, 95%, ${60 - s*4}%, ${0.07 * glyph.glow})`;
+    ctx.lineWidth = 1.2 - s*0.12;
+    ctx.stroke();
+  }
+
+  // head bloom
+  const grd = ctx.createRadialGradient(glyph.x, glyph.y, 0, glyph.x, glyph.y, 44);
+  grd.addColorStop(0, `rgba(200,255,255,${0.95*glyph.glow})`);
+  grd.addColorStop(0.25, `rgba(170,220,255,${0.35*glyph.glow})`);
+  grd.addColorStop(0.8, `rgba(80,140,200,${0.06*glyph.glow})`);
+  ctx.fillStyle = grd;
+  ctx.beginPath(); ctx.arc(glyph.x, glyph.y, 18, 0, Math.PI*2); ctx.fill();
+
+  // sharp core
+  ctx.beginPath();
+  ctx.fillStyle = `rgba(235,255,255,${0.98*glyph.glow})`;
+  ctx.ellipse(glyph.x + glyph.vx*0.008, glyph.y + glyph.vy*0.008, 6, 8, Math.atan2(glyph.vy,glyph.vx), 0, Math.PI*2);
+  ctx.fill();
+
+  // optional morse-like blink (a little flash on the head)
+  if(morse){
+    const ms = Math.floor(performance.now()/180) % 8;
+    if(ms<2){
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,220,${0.12 * glyph.glow})`;
+      ctx.arc(glyph.x, glyph.y, 36, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+}
+
+/* UI interactions to simulate task switching and mode */
+document.getElementById('modeBtn').addEventListener('click', ()=>{
+  if(mode==='edge'){ mode='wander'; document.getElementById('modeBtn').textContent='Mode: wander'; }
+  else if(mode==='wander'){ mode='pattern'; document.getElementById('modeBtn').textContent='Mode: pattern'; }
+  else { mode='edge'; document.getElementById('modeBtn').textContent='Mode: edge-trace'; }
+});
+
+document.getElementById('patternBtn').addEventListener('click', ()=>{
+  if(pattern==='none'){ pattern='butterfly'; document.getElementById('patternBtn').textContent='Pattern: butterfly';}
+  else if(pattern==='butterfly'){ pattern='fractal'; document.getElementById('patternBtn').textContent='Pattern: fractal';}
+  else { pattern='none'; document.getElementById('patternBtn').textContent='Pattern: none';}
+});
+
+document.getElementById('morseBtn').addEventListener('click', ()=>{
+  morse = !morse;
+  document.getElementById('morseBtn').textContent = `Morse: ${morse?'on':'off'}`;
+});
+
+/* clicking the frame simulates "task switch" dash */
+ui.addEventListener('click', (ev)=>{
+  glyph.dashing = true;
+  glyph.modeTimer = 0;
+  setTimeout(()=>glyph.dashing = false, 240);
+});
+
+/* initialize glyph at a corner */
+const r0 = getFrameRect();
+glyph.x = r0.x + 6;
+glyph.y = r0.y + 6;
+glyph.tail = [];
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

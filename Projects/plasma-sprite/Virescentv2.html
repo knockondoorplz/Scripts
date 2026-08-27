@@ -1,0 +1,771 @@
+<!-- Save as virescent-v2.html and open in a modern browser -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Virescent V2 — Glyph Familiar Prototype</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+  :root{
+    --bg:#06060a;
+    --muted:#9aa7ff;
+    --panel:#0f1220;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#03030a,#071026 60%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+  .app {
+    display:flex;height:100vh;gap:12px;padding:10px;
+    box-sizing:border-box;
+  }
+  .left{
+    width:75%;position:relative;border-radius:12px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 -30px 90px rgba(0,0,0,0.12);
+  }
+  .right{
+    width:25%;display:flex;flex-direction:column;gap:10px;
+  }
+  #stage{position:absolute;left:0;top:0;width:100%;height:100%}
+  .hud {
+    position:absolute;left:12px;top:12px;color:var(--muted);z-index:40;font-size:13px;
+    background:linear-gradient(180deg, rgba(10,12,20,0.6), rgba(10,12,20,0.35));
+    border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+  }
+  .controls {padding:12px;background:var(--panel);border-radius:10px;color:#dfe6ff;box-shadow:0 14px 30px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03)}
+  .controls h3{margin:0 0 8px 0;font-size:14px}
+  button, select, input[type=range] {margin:6px 0;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#0b0b12;color:#e9f0ff;width:100%}
+  .row{display:flex;gap:8px}
+  .small{font-size:12px;color:#9aa7ff}
+  .note{font-size:12px;color:#9aa7ff;margin-top:6px}
+  .monitorLabel {position:absolute;left:8px;top:8px;color:rgba(255,255,255,0.25);font-size:12px}
+  .window {
+    position:absolute;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+    border-radius:6px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 12px 30px rgba(0,0,0,0.6);
+    color:#dfe6ff;padding:8px;font-size:13px;cursor:move;
+  }
+  .title{font-weight:600;margin-bottom:6px}
+  .taskbar{
+    position:absolute;left:0;right:0;height:42px;bottom:6px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.45));
+    border-radius:8px;margin:0 12px;padding:6px;border:1px solid rgba(255,255,255,0.03);
+    display:flex;gap:6px;align-items:center;
+  }
+  .appBtn{padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-size:13px}
+  .smallMuted{font-size:12px;color:rgba(255,255,255,0.32)}
+  footer{position:fixed;left:12px;bottom:12px;color:rgba(255,255,255,0.12);font-size:12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="left">
+    <canvas id="stage"></canvas>
+
+    <div class="hud">
+      <div style="font-weight:700">Virescent — glyph familiar</div>
+      <div class="smallMuted">Dual monitors: TV (left) ↔ Laptop (right)</div>
+      <div class="note">Click a simulated window to focus it — Virescent will inspect and dash. Drag windows between monitors.</div>
+    </div>
+
+    <!-- Monitor labels drawn on canvas. -->
+  </div>
+
+  <div class="right">
+    <div class="controls">
+      <h3>Modes & Controls</h3>
+      <div class="row">
+        <select id="behavior">
+          <option value="edge">Edge Trace</option>
+          <option value="wander">Idle Wander</option>
+          <option value="geometry">Geometry Mode</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <select id="geometryMode">
+          <option value="none">— geometry —</option>
+          <option value="spiral">Spiral</option>
+          <option value="butterfly">Butterfly-ish</option>
+          <option value="lissajous">Lissajous</option>
+          <option value="raindrop">Raindrop Crawl</option>
+        </select>
+      </div>
+
+      <label class="small">Speed <span id="speedVal">1.0</span></label>
+      <input id="speed" type="range" min="0.35" max="2.6" step="0.05" value="1.0"/>
+
+      <label class="small">Tail length <span id="tailVal">18</span></label>
+      <input id="tail" type="range" min="6" max="44" step="1" value="18"/>
+
+      <label class="small">Mischief</label>
+      <input id="mischief" type="range" min="0" max="1" step="0.01" value="0.55"/>
+
+      <div style="margin-top:8px">
+        <button id="spawnWin">Spawn Window</button>
+        <button id="toggleGlyph">Toggle Glyph Flip/Flash</button>
+        <button id="resetPos">Reset Virescent</button>
+      </div>
+
+      <div class="note">Rune set: ᚛ ᚜ ᛝ ۞ ₪ ✧ ᚾ ߷ ౨ ᔑ — flashes for expression.</div>
+    </div>
+
+    <div class="controls">
+      <h3>Personality</h3>
+      <div class="small">Choose a mood and it will color-shift accordingly</div>
+      <div style="margin-top:8px">
+        <button data-mood="calm" class="moodBtn">Calm</button>
+        <button data-mood="curious" class="moodBtn">Curious</button>
+        <button data-mood="mischief" class="moodBtn">Mischief</button>
+        <button data-mood="playful" class="moodBtn">Playful</button>
+      </div>
+      <div class="note">Tip: set behavior to "geometry" then pick a shape to let it perform.</div>
+    </div>
+
+    <div class="controls">
+      <h3>Showcase</h3>
+      <div class="smallMuted">Taskbar & quick apps (Virescent will perch on taskbar occasionally)</div>
+      <div style="display:flex;gap:6px;margin-top:6px">
+        <button class="appBtn" id="openMusic">Open Spotify</button>
+        <button class="appBtn" id="openEditor">Open Editor</button>
+        <button class="appBtn" id="openBrowser">Open Browser</button>
+        <button class="appBtn" id="closeAll">Close All</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>Virescent V2 prototype — drag windows, spawn apps, watch the glyph. (No system changes — browser only)</footer>
+
+<script>
+/* ------------------------------
+   Virescent V2 — core prototype
+   ------------------------------
+   Single-file browser simulation. This is the testbed:
+   - Two monitors (left TV, right laptop)
+   - Draggable windows
+   - Glyph with tail, glyph-runic body, modes, flashes, geometry
+*/
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d', { alpha:true });
+const leftBox = document.querySelector('.left');
+function resize(){
+  canvas.width = leftBox.clientWidth;
+  canvas.height = leftBox.clientHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* ---------- environment: monitors ---------- */
+/* We'll simulate two monitors inside the canvas:
+   - MonitorL: left 60% (TV)
+   - MonitorR: right 38% (Laptop)
+   Gap between monitors to emulate bezel
+*/
+const MONITOR_GAP = 14;
+function getMonitors(){
+  const W = canvas.width, H = canvas.height;
+  const leftW = Math.floor(W * 0.58);
+  const rightW = Math.floor(W * 0.38);
+  const left = { id:'TV', x: 6, y: 6, w: leftW-12, h: H-12 };
+  const right = { id:'Laptop', x: left.x + left.w + MONITOR_GAP, y:6, w: rightW-12, h: H-12 };
+  return [left, right];
+}
+
+/* ---------- windows simulation ---------- */
+let windows = []; // objects: {id,x,y,w,h,title,monitor,focused}
+let winId = 0;
+
+function spawnWindow(opts){
+  const mons = getMonitors();
+  const target = opts?.monitor === 'Laptop' ? mons[1] : mons[0];
+  const w = opts?.w || Math.max(160, Math.round(target.w*0.32));
+  const h = opts?.h || Math.max(120, Math.round(target.h*0.28));
+  const x = opts?.x ?? (target.x + Math.random()*(target.w - w - 24) + 8);
+  const y = opts?.y ?? (target.y + Math.random()*(target.h - h - 40) + 8);
+  const id = ++winId;
+  const title = opts?.title || ['Spotify','Editor','Browser','Notes','Vault'][Math.floor(Math.random()*5)];
+  const win = { id, x, y, w, h, title, monitor: target.id, focused:false, z: id, moving:false };
+  windows.push(win);
+  focusWindow(id);
+  return win;
+}
+function focusWindow(id){
+  windows.forEach(w=>w.focused = (w.id===id));
+  // bring to front by z
+  const w = windows.find(x=>x.id===id);
+  if(w){ w.z = Math.max(...windows.map(x=>x.z))+1; }
+  // trigger Virescent dash/inspect
+  virescent.triggerInspect(w);
+}
+function closeAllWindows(){
+  windows = [];
+}
+
+/* drag handlers for window elements (canvas-based) */
+let dragging = null;
+let dragOffset = {x:0,y:0};
+
+// simple hit test
+function hitWindow(px,py){
+  let found = null;
+  for(const w of windows){
+    if(px >= w.x && px <= w.x+w.w && py>=w.y && py <= w.y+w.h){
+      if(!found || w.z > found.z) found = w;
+    }
+  }
+  return found;
+}
+
+canvas.addEventListener('pointerdown', (ev)=>{
+  const rect = canvas.getBoundingClientRect();
+  const x = ev.clientX - rect.left;
+  const y = ev.clientY - rect.top;
+  const w = hitWindow(x,y);
+  if(w){
+    dragging = w;
+    dragOffset.x = x - w.x;
+    dragOffset.y = y - w.y;
+    w.moving = true;
+    focusWindow(w.id);
+  } else {
+    // click empty space -> no focus
+  }
+});
+
+window.addEventListener('pointermove', (ev)=>{
+  if(!dragging) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = ev.clientX - rect.left;
+  const y = ev.clientY - rect.top;
+  dragging.x = x - dragOffset.x;
+  dragging.y = y - dragOffset.y;
+  // if crosses monitors boundary, update monitor id
+  const mons = getMonitors();
+  for(const m of mons){
+    if(dragging.x + dragging.w/2 >= m.x && dragging.x + dragging.w/2 <= m.x + m.w){
+      dragging.monitor = m.id;
+    }
+  }
+});
+window.addEventListener('pointerup', (ev)=>{
+  if(dragging){
+    dragging.moving = false;
+    dragging = null;
+  }
+});
+
+/* ---------- UI controls ---------- */
+document.getElementById('spawnWin').addEventListener('click', ()=>spawnWindow({}));
+document.getElementById('openMusic').addEventListener('click', ()=>spawnWindow({title:'Spotify', monitor:'Laptop'}));
+document.getElementById('openEditor').addEventListener('click', ()=>spawnWindow({title:'Editor', monitor:'TV'}));
+document.getElementById('openBrowser').addEventListener('click', ()=>spawnWindow({title:'Browser', monitor:'Laptop'}));
+document.getElementById('closeAll').addEventListener('click', ()=>closeAllWindows());
+document.getElementById('toggleGlyph').addEventListener('click', ()=>virescent.toggleFlash());
+document.getElementById('resetPos').addEventListener('click', ()=>virescent.resetPosition());
+
+document.getElementById('behavior').addEventListener('change', (e)=>virescent.setBehavior(e.target.value));
+document.getElementById('geometryMode').addEventListener('change', (e)=>virescent.setGeometry(e.target.value));
+document.getElementById('speed').addEventListener('input', (e)=>{virescent.cfg.speed = parseFloat(e.target.value); document.getElementById('speedVal').innerText = e.target.value;});
+document.getElementById('tail').addEventListener('input', (e)=>{virescent.cfg.tailLen = parseInt(e.target.value); document.getElementById('tailVal').innerText = e.target.value;});
+document.getElementById('mischief').addEventListener('input', (e)=>virescent.cfg.mischief = parseFloat(e.target.value));
+document.querySelectorAll('.moodBtn').forEach(b=>b.addEventListener('click', (ev)=>virescent.setMood(ev.target.dataset.mood)));
+
+/* ---------- rune set & utilities ---------- */
+const RUNES = ['᚛','᚜','ᛝ','۞','₪','✧','ᚾ','߷','౨','ᔑ'];
+function pickRune(){ return RUNES[Math.floor(Math.random()*RUNES.length)]; }
+function rand(a,b){return a + Math.random()*(b-a)}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+
+/* ---------- Virescent core creature ---------- */
+const virescent = {
+  x: 200, y: 200,
+  vx: 0, vy: 0,
+  speed: 1.0,
+  tail: [],
+  tailLen: 18,
+  glow: 1.0,
+  rune: pickRune(),
+  runeAlt: pickRune(),
+  mood: 'curious',
+  behavior: 'edge',
+  geometryMode: 'none',
+  lastInspectT: 0,
+  cfg: { speed:1.0, tailLen:18, mischief:0.55 },
+  dashing: false,
+  lastActiveTime: performance.now(),
+  idleSince: 0,
+  // internal timers
+  _flashTimer: 0,
+  _flashSeq: [],
+  _modeTimer: 0,
+
+  resetPosition(){
+    const mons = getMonitors();
+    this.x = mons[1].x + 40; // start near laptop
+    this.y = mons[1].y + 40;
+    this.tail = [];
+  },
+
+  setBehavior(b){ this.behavior = b; },
+  setGeometry(g){ this.geometryMode = g; },
+  setMood(m){ this.mood = m; },
+  toggleFlash(){ this._doFlashSequence(); },
+  triggerInspect(win){ // called when focus changes
+    if(!win) return;
+    this._doDashToCenter(win);
+    // small runic stutter
+    this._doShortGlitch(3);
+  },
+
+  _doShortGlitch(n){
+    // very quick rune stutter
+    const seq = [];
+    for(let i=0;i<n;i++) seq.push({r:pickRune(),t:40 + Math.random()*80});
+    this._flashSeq = seq;
+    this._flashTimer = performance.now();
+  },
+
+  _doFlashSequence(){
+    // longer expressive sequence like FFx glyph sneeze
+    const seq = [];
+    for(let i=0;i<6;i++) seq.push({r: RUNES[(i+Math.floor(Math.random()*RUNES.length))%RUNES.length], t: 60 + i*40});
+    this._flashSeq = seq;
+    this._flashTimer = performance.now();
+  },
+
+  _doDashToCenter(win){
+    // compute a target point along window's top-center, dash there
+    if(!win) return;
+    const tx = win.x + win.w*0.5;
+    const ty = win.y + 10;
+    this._dashTarget = {x:tx, y:ty, t:performance.now()};
+    this.dashing = true;
+    setTimeout(()=>{ this.dashing = false; }, 300 + Math.random()*180);
+  },
+
+  update(dt){
+    // apply cfg scales
+    this.speed = this.cfg.speed;
+    this.tailLen = Math.round(this.cfg.tailLen);
+    // determine behaviour target
+    const now = performance.now();
+    this._modeTimer += dt;
+
+    // find active (focused) window
+    const focused = windows.find(w=>w.focused);
+    // idle detection: if mouse hasn't moved in 2.5s => idle
+    const idle = (now - this.lastActiveTime) > 2500;
+
+    // default target: wander inside current monitor
+    let target = null;
+
+    if(this.dashing && this._dashTarget){
+      target = this._dashTarget;
+    } else if(this.behavior === 'edge') {
+      // if focused window exists, hug its perimeter / choose a point on perimeter
+      if(focused){
+        const pts = perimeterPoints(focused, 140);
+        // choose index from time + mischief to make path less deterministic
+        const idx = Math.floor((now/600 * (1 + this.cfg.mischief*1.6)) % pts.length);
+        target = pts[idx];
+      } else {
+        // default: patrol screens’ outer edge
+        const mons = getMonitors();
+        const m = (this.x < mons[0].x+mons[0].w) ? mons[0] : mons[1];
+        const pts = perimeterPoints(m, 240);
+        const idx = Math.floor((now/900 * (1 + this.cfg.mischief)) % pts.length);
+        target = pts[idx];
+      }
+    } else if(this.behavior === 'wander'){
+      // slow wander: choose a randomized target inside nearest monitor occasionally
+      if(!this._wanderTarget || this._modeTimer > 3.2){
+        const m = this._nearestMonitor();
+        this._wanderTarget = {
+          x: m.x + 24 + Math.random()*(m.w-48),
+          y: m.y + 24 + Math.random()*(m.h-64)
+        };
+        this._modeTimer = 0;
+      }
+      target = this._wanderTarget;
+    } else if(this.behavior === 'geometry'){
+      // follow geometry pattern centered in a screen or around a focused window
+      if(focused){
+        target = this._geometryPoint(this.geometryMode, focused, now);
+      } else {
+        const mons = getMonitors();
+        const m = (this.x < mons[0].x+mons[0].w) ? mons[0] : mons[1];
+        target = this._geometryPoint(this.geometryMode, m, now);
+      }
+    }
+
+    // reactive to cursor: if mouse gets close and not dashing, be curious
+    if(!this.dashing && mouse.pos){
+      const distToCursor = Math.hypot(this.x - mouse.pos.x, this.y - mouse.pos.y);
+      if(distToCursor < 90){
+        // approach a point just behind the cursor to "peek"
+        target = { x: mouse.pos.x - (mouse.delta.x*6) , y: mouse.pos.y - (mouse.delta.y*6) };
+      }
+    }
+
+    // compute movement toward target with easing and tail-lag
+    if(target){
+      const dx = target.x - this.x;
+      const dy = target.y - this.y;
+      const dist = Math.hypot(dx,dy) || 1;
+      const maxspeed = 420 * this.speed * (this.dashing ? 2.6 : 1.0);
+      const desiredVx = (dx/dist) * maxspeed;
+      const desiredVy = (dy/dist) * maxspeed;
+      // smooth velocity and add a bit of noise according to mischief
+      const mix = clamp(5*dt*(1 + this.cfg.mischief), 0.02, 1);
+      this.vx = lerp(this.vx||0, desiredVx, mix);
+      this.vy = lerp(this.vy||0, desiredVy, mix);
+      // update position
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+    } else {
+      // gentle floating if no target
+      this.vx = lerp(this.vx||0, rand(-12,12), 0.03);
+      this.vy = lerp(this.vy||0, rand(-8,8), 0.03);
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+    }
+
+    // tail
+    this.tail.unshift({x:this.x, y:this.y, t:now});
+    while(this.tail.length > this.tailLen) this.tail.pop();
+
+    // glow dynamics
+    this.glow = lerp(this.glow, this.dashing ? 2.2 : 0.85, dt*3.8);
+
+    // rune flashing sequence management
+    if(this._flashSeq && this._flashSeq.length){
+      const elapsed = now - this._flashTimer;
+      let acc = 0, activeRune = null;
+      for(const s of this._flashSeq){
+        acc += s.t;
+        if(elapsed < acc){ activeRune = s.r; break; }
+      }
+      if(activeRune) this.rune = activeRune;
+      else { this._flashSeq = []; this.rune = pickRune(); }
+    }
+
+    // occasionally swap rune to keep it alive
+    if(Math.random() < 0.012 * this.cfg.mischief) this.rune = pickRune();
+
+    // keep virescent inside canvas area (wrap between monitors allowed)
+    const area = {x:6,y:6,w:canvas.width-12,h:canvas.height-12};
+    if(this.x < area.x) this.x = area.x;
+    if(this.y < area.y) this.y = area.y;
+    if(this.x > area.x + area.w) this.x = area.x + area.w;
+    if(this.y > area.y + area.h) this.y = area.y + area.h;
+
+    // store lastActiveTime if user recently moved mouse
+    if(mouse.lastMoved) this.lastActiveTime = mouse.lastMoved;
+  },
+
+  _nearestMonitor(){
+    const mons = getMonitors();
+    for(const m of mons){
+      if(this.x >= m.x && this.x <= m.x + m.w) return m;
+    }
+    return mons[1];
+  },
+
+  _geometryPoint(mode, region, now){
+    const center = { x: region.x + region.w/2, y: region.y + region.h/2 };
+    const t = now/800;
+    if(mode === 'spiral'){
+      const r = 40 + ((t%50) * 8) % Math.min(region.w, region.h)/2;
+      const a = t*2.4;
+      return { x: center.x + Math.cos(a)*r, y: center.y + Math.sin(a)*r };
+    } else if(mode === 'butterfly'){
+      // stylized parametric
+      const u = (t%12) * 1.2;
+      const r = Math.sin(u*2)*1.6 + Math.sin(u*6)*0.6;
+      return { x: center.x + Math.cos(u)*80*r, y: center.y + Math.sin(u)*60*r };
+    } else if(mode === 'lissajous'){
+      const A = Math.min(region.w,region.h)*0.28;
+      const a = 3, b = 2.0, delta = 1.2;
+      const x = center.x + A*Math.sin(a*t + delta);
+      const y = center.y + A*Math.sin(b*t);
+      return {x,y};
+    } else if(mode === 'raindrop'){
+      // drips that fall and create small ripples: we move slowly down then jump
+      const sx = center.x + Math.cos(t*0.9)* (region.w*0.18);
+      const sy = center.y + Math.abs(Math.sin(t*1.9)) * (region.h*0.38);
+      return {x:sx, y:sy};
+    }
+    return center;
+  }
+};
+
+/* ---------- drawing helpers ---------- */
+function perimeterPoints(rect, density=120){
+  const p = [];
+  const {x,y,w,h} = rect;
+  const seg = Math.max(4, Math.round(density/4));
+  for(let i=0;i<seg;i++) p.push({x: x + i*(w/seg), y: y});
+  for(let i=0;i<seg;i++) p.push({x: x+w, y: y + i*(h/seg)});
+  for(let i=0;i<seg;i++) p.push({x: x + w - i*(w/seg), y: y+h});
+  for(let i=0;i<seg;i++) p.push({x: x, y: y + h - i*(h/seg)});
+  return p;
+}
+
+function lerp(a,b,t){return a + (b-a)*t}
+
+/* ---------- mouse tracking ---------- */
+const mouse = {pos:null, delta:{x:0,y:0}, lastMoved:0};
+window.addEventListener('pointermove', (ev)=>{
+  const rect = canvas.getBoundingClientRect();
+  const x = ev.clientX - rect.left;
+  const y = ev.clientY - rect.top;
+  if(mouse.pos){ mouse.delta.x = (x - mouse.pos.x); mouse.delta.y = (y - mouse.pos.y); }
+  mouse.pos = {x,y};
+  mouse.lastMoved = performance.now();
+});
+
+/* ---------- main loop ---------- */
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(0.06, (now - last)/1000);
+  last = now;
+  update(dt);
+  render();
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function update(dt){
+  // update windows (nothing heavy)
+  // update virescent
+  virescent.update(dt);
+}
+
+// draw screens, windows, glyph, tail, taskbar
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const mons = getMonitors();
+
+  // subtle vignette
+  const g = ctx.createLinearGradient(0,0,0,canvas.height);
+  g.addColorStop(0, 'rgba(255,255,255,0.02)');
+  g.addColorStop(1, 'rgba(0,0,0,0.14)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // draw monitors
+  for(const m of mons){
+    ctx.save();
+    // monitor frame
+    ctx.fillStyle = 'rgba(255,255,255,0.012)';
+    roundRect(ctx, m.x, m.y, m.w, m.h, 8); ctx.fill();
+    // inner screen
+    ctx.fillStyle = 'rgba(6,8,14,0.85)';
+    roundRect(ctx, m.x+8, m.y+8, m.w-16, m.h-16, 6); ctx.fill();
+    // label
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.font = '12px system-ui';
+    ctx.fillText(m.id + (m.id==='TV'?' (left)':' (right)'), m.x + 12, m.y + 20);
+    ctx.restore();
+  }
+
+  // draw windows sorted by z
+  const sorted = windows.slice().sort((a,b)=>a.z - b.z);
+  for(const w of sorted){
+    drawWindow(w);
+  }
+
+  // draw taskbar on bottom monitor(s) inside left monitor area for demo
+  const activeMon = mons[1]; // emulate taskbar anchored to laptop for this demo
+  const tbW = activeMon.w - 24, tbH = 46;
+  const tbX = activeMon.x + 12, tbY = activeMon.y + activeMon.h - tbH - 12;
+  // taskbar background
+  ctx.fillStyle = 'rgba(10,11,16,0.36)';
+  roundRect(ctx, tbX, tbY, tbW, tbH, 12); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  roundRect(ctx, tbX+8, tbY+8, 36, 30, 8); ctx.fill();
+  // icons
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.font = '12px system-ui';
+  ctx.fillText('Taskbar', tbX + 56, tbY + 24);
+
+  // draw virescent tail (glowing blobs)
+  ctx.globalCompositeOperation = 'lighter';
+  const now = performance.now();
+  for(let i=0;i<virescent.tail.length;i++){
+    const p = virescent.tail[i];
+    const age = (now - p.t)/1000;
+    const fade = clamp(1 - (i/virescent.tail.length) - age*0.4, 0, 1);
+    if(fade <= 0) continue;
+    const hue = moodHue(virescent.mood) + i*1.6 + Math.sin((i/4)+now/900)*6;
+    const alpha = 0.12 * fade * virescent.glow;
+    ctx.fillStyle = `hsla(${hue},92%,${40 + fade*18}%,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 8 + i*0.7, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+
+  // draw head bloom
+  const grd = ctx.createRadialGradient(virescent.x, virescent.y, 0, virescent.x, virescent.y, 58);
+  const hue = moodHue(virescent.mood);
+  grd.addColorStop(0, `hsla(${hue},95%,92%,${0.9 * virescent.glow})`);
+  grd.addColorStop(0.2, `hsla(${hue - 10},90%,72%,${0.35 * virescent.glow})`);
+  grd.addColorStop(0.9, `hsla(${hue - 40},65%,36%,${0.06 * virescent.glow})`);
+  ctx.fillStyle = grd;
+  ctx.beginPath(); ctx.arc(virescent.x, virescent.y, 28 + virescent.glow*6, 0, Math.PI*2); ctx.fill();
+
+  // electric filaments (thin strokes)
+  ctx.globalCompositeOperation = 'lighter';
+  for(let s=0;s<5;s++){
+    ctx.beginPath();
+    ctx.moveTo(virescent.x, virescent.y);
+    for(let k=0;k<5;k++){
+      const a = k/5*Math.PI*2 + s*0.9;
+      const rx = virescent.x + Math.cos(a + now/400 + s)* (6 + k*1.2);
+      const ry = virescent.y + Math.sin(a + now/400 + s)* (6 + k*0.9);
+      ctx.lineTo(rx + Math.sin(k*1.7)* (s*0.4), ry + Math.cos(k*1.3)* (s*0.3));
+    }
+    ctx.strokeStyle = `hsla(${hue + s*6}, 98%, ${60 - s*4}%, ${0.07 * virescent.glow})`;
+    ctx.lineWidth = 1.0 - s*0.12;
+    ctx.stroke();
+  }
+
+  // draw glyph (unicode rune) as the head/core
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.font = '28px "Noto Sans Symbols 2", system-ui, serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = `rgba(255,255,255,${0.98 * virescent.glow})`;
+  ctx.fillText(virescent.rune, virescent.x + virescent.vx*0.006, virescent.y + virescent.vy*0.006);
+
+  // tiny stroke/orbit glyphs when excited
+  if(virescent.dashing || virescent._flashSeq.length){
+    for(let i=0;i<3;i++){
+      const a = (now/200) + i*2.1;
+      const ox = virescent.x + Math.cos(a)* (22 + i*6);
+      const oy = virescent.y + Math.sin(a)* (14 + i*5);
+      ctx.font = `${12 + i*2}px system-ui`;
+      ctx.fillStyle = `hsla(${hue + i*16},95%,68%,${0.9 - i*0.22})`;
+      ctx.fillText(RUNES[(i + (Math.floor(now/150)%RUNES.length))%RUNES.length], ox, oy);
+    }
+  }
+
+  // small label showing mode
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.font = '12px system-ui';
+  ctx.fillText('Mode: ' + virescent.behavior + (virescent.geometryMode!=='none'?(' / '+virescent.geometryMode):''), 14, canvas.height - 18);
+}
+
+/* helper for rounded rect */
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.arcTo(x+w, y, x+w, y+h, r);
+  ctx.arcTo(x+w, y+h, x, y+h, r);
+  ctx.arcTo(x, y+h, x, y, r);
+  ctx.arcTo(x, y, x+w, y, r);
+  ctx.closePath();
+}
+
+/* ---------- small UI: clicking windows focuses them ---------- */
+/* We allow clicking on window rectangles by pointerdown logic earlier.
+   Also allow double-clicking empty area to spawn window on current monitor.
+*/
+canvas.addEventListener('dblclick', (ev)=>{
+  const rect = canvas.getBoundingClientRect();
+  const x = ev.clientX - rect.left, y = ev.clientY - rect.top;
+  // decide monitor
+  const mons = getMonitors();
+  let mon = mons[1];
+  if(x < mons[0].x + mons[0].w) mon = mons[0];
+  spawnWindow({x:x-60,y:y-30,monitor:mon.id});
+});
+
+/* ---------- draw windows function ---------- */
+function drawWindow(w){
+  // window shadow and body
+  const corner = 8;
+  ctx.save();
+  ctx.globalCompositeOperation = 'source-over';
+  // window background
+  roundRect(ctx, w.x, w.y, w.w, w.h, corner);
+  ctx.fillStyle = 'rgba(18,20,30,0.88)';
+  ctx.fill();
+  // title bar
+  ctx.fillStyle = w.focused ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)';
+  roundRect(ctx, w.x, w.y, w.w, 30, {tl:corner,tr:corner,br:0,bl:0});
+  ctx.fill();
+  // title text
+  ctx.fillStyle = w.focused ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.7)';
+  ctx.font = '13px system-ui';
+  ctx.fillText(w.title, w.x + 12, w.y + 19);
+  // body content (placeholder)
+  ctx.fillStyle = 'rgba(255,255,255,0.03)';
+  ctx.fillRect(w.x + 12, w.y + 36, Math.max(40,w.w-24), Math.max(20,w.h-48));
+
+  // small edge highlight to make it attractive
+  ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // when focused, draw a "perch" hint for Virescent
+  if(w.focused){
+    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillRect(w.x + w.w - 66, w.y + 6, 44, 18);
+  }
+
+  // z-index effect: a faint glow
+  if(w.focused){
+    ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createLinearGradient(w.x, w.y, w.x + w.w, w.y + w.h);
+    g.addColorStop(0, 'rgba(255,255,255,0.01)');
+    g.addColorStop(1, 'rgba(180,220,255,0.01)');
+    ctx.fillStyle = g;
+    roundRect(ctx, w.x-6, w.y-6, w.w+12, w.h+12, corner+6); ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+/* ---------- helpers ---------- */
+function moodHue(mood){
+  switch(mood){
+    case 'calm': return 200; // teal
+    case 'curious': return 190;
+    case 'mischief': return 320; // magenta
+    case 'playful': return 40; // warm golden
+    default: return 190;
+  }
+}
+
+/* ---------- initialization ---------- */
+spawnWindow({title:'Welcome', monitor:'Laptop', w:380, h:220});
+spawnWindow({title:'Visualizer', monitor:'TV', w:420, h:280});
+virescent.resetPosition();
+virescent.setBehavior('edge');
+
+/* small helper to lerp */
+function lerp(a,b,t){return a + (b-a)*t}
+
+/* ---------- keyboard shortcuts (for play) ---------- */
+window.addEventListener('keydown', (e)=>{
+  if(e.key === '1') document.getElementById('behavior').value = 'edge', virescent.setBehavior('edge');
+  if(e.key === '2') document.getElementById('behavior').value = 'wander', virescent.setBehavior('wander');
+  if(e.key === '3') document.getElementById('behavior').value = 'geometry', virescent.setBehavior('geometry');
+});
+
+/* ---------- small autospawn flavor: when a new window appears it will cause Virescent to inspect ---------- */
+const originalSpawn = spawnWindow;
+spawnWindow = function(opts){
+  const w = originalSpawn(opts);
+  // cause quick focus event
+  setTimeout(()=>focusWindow(w.id), 80 + Math.random()*160);
+  return w;
+};
+
+</script>
+</body>
+</html>

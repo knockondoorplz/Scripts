@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JiggaBloom — Reactive Fractal / Flow Toy</title>
+  <style>
+    :root{
+      --bg:#070709; --panel:#0f0f12; --muted:#9aa0a6; --accent:#7efcff;
+      --thumb-w:120px; --thumb-h:40px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#e7eef6}
+    .app{display:flex;height:100vh;gap:12px;padding:12px}
+
+    /* left timeline */
+    .timeline{width:18%;background:linear-gradient(180deg,#0b0b0d,#0e0e11);border-radius:10px;padding:12px;overflow:auto}
+    .controls-top{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+    .mode-select{width:100%}
+    .thumbs{display:flex;flex-direction:column;gap:8px}
+    .thumb{width:100%;height:var(--thumb-h);border-radius:6px;background:#0b0b0b;display:flex;align-items:center;justify-content:center;cursor:pointer;outline:2px solid transparent}
+    .thumb.active{outline-color:var(--accent)}
+    .thumb canvas{width:100%;height:100%;border-radius:6px;display:block}
+
+    /* main
+    */
+    .stage{flex:1;display:flex;flex-direction:column;border-radius:10px;padding:12px;background:linear-gradient(180deg,#071018,#000)}
+    .viewport{flex:1;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.02), rgba(0,0,0,0.6));border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative}
+    canvas#mainCanvas{max-width:100%;max-height:100%;border-radius:10px;background:transparent}
+
+    .uibottom{display:flex;gap:12px;align-items:center;padding-top:10px}
+    .panel{background:var(--panel);padding:10px;border-radius:8px;display:flex;gap:8px;align-items:center}
+
+    .slider{display:flex;flex-direction:column;gap:6px}
+    label{font-size:12px;color:var(--muted)}
+    input[type=range]{width:240px}
+    select,input,button{background:#0b0b0b;color:#e7eef6;border:1px solid rgba(255,255,255,0.04);padding:6px;border-radius:6px}
+    button{cursor:pointer}
+
+    .small{font-size:12px;color:var(--muted)}
+    .play{display:flex;gap:6px;align-items:center}
+
+    footer{position:absolute;right:18px;bottom:18px;font-size:12px;color:var(--muted)}
+
+    @media (max-width:900px){.timeline{display:none}.app{padding:8px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="timeline">
+      <div class="controls-top">
+        <select id="mode" class="mode-select" title="Choose generator">
+          <option value="clifford">Clifford Attractor</option>
+          <option value="deJong">De Jong Attractor</option>
+          <option value="flow">Flow Field (bubble toy)</option>
+          <option value="lissajous">Lissajous Bloom</option>
+        </select>
+        <button id="regen">Regenerate</button>
+      </div>
+      <div class="small">Timeline thumbnails (click to jump)</div>
+      <div class="thumbs" id="thumbs"></div>
+    </aside>
+
+    <main class="stage">
+      <div class="viewport">
+        <canvas id="mainCanvas" width="900" height="600"></canvas>
+        <footer>JiggaBloom — interactive fractal & flow toy</footer>
+      </div>
+
+      <div class="uibottom">
+        <div class="panel play">
+          <button id="playBtn">▶</button>
+          <button id="rewBtn">⏪</button>
+          <button id="ffBtn">⏩</button>
+          <span class="small">Frame</span>
+          <input id="frameRange" type="range" min="0" max="199" value="0">
+          <span id="frameVal" class="small">0</span>
+        </div>
+
+        <div class="panel slider">
+          <label>Scale</label>
+          <input id="scale" type="range" min="0.2" max="4" step="0.01" value="1">
+        </div>
+
+        <div class="panel slider">
+          <label>Complexity / iterations</label>
+          <input id="iter" type="range" min="200" max="8000" step="10" value="1500">
+        </div>
+
+        <div class="panel slider">
+          <label>Color shift</label>
+          <input id="colorShift" type="range" min="0" max="360" step="1" value="0">
+        </div>
+
+        <div class="panel slider">
+          <label>Bloom (alpha)</label>
+          <input id="alpha" type="range" min="0.02" max="0.7" step="0.01" value="0.14">
+        </div>
+
+        <div class="panel">
+          <label class="small">Preview size</label>
+          <input id="thumbSize" type="range" min="40" max="120" value="40">
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script>
+/*
+  JiggaBloom — single-file reactive generative toy.
+  - left column: thumbnails representing 200 parameterized frames
+  - center: main canvas that draws a generator based on mode + params at the current frame
+  - controls: play/rew/ff, scale, iterations, color shift, alpha bloom, thumb size
+
+  Notes: this is intentionally simple and CPU-friendly for a prototype.
+*/
+
+const FRAMES = 200;
+const thumbsContainer = document.getElementById('thumbs');
+const mainCanvas = document.getElementById('mainCanvas');
+const ctx = mainCanvas.getContext('2d', {alpha:true});
+const frameRange = document.getElementById('frameRange');
+const frameVal = document.getElementById('frameVal');
+const playBtn = document.getElementById('playBtn');
+const modeSelect = document.getElementById('mode');
+const regenBtn = document.getElementById('regen');
+
+const scaleInput = document.getElementById('scale');
+const iterInput = document.getElementById('iter');
+const colorShiftInput = document.getElementById('colorShift');
+const alphaInput = document.getElementById('alpha');
+const thumbSizeInput = document.getElementById('thumbSize');
+
+let currentFrame = 0;
+let playing = false;
+let playSpeed = 1; // frames per tick
+let thumbnails = []; // {canvas,ctx}
+
+// helper: lerp
+const lerp = (a,b,t) => a + (b-a)*t;
+
+// parameter curves: map frame index (0..FRAMES-1) to generator parameters
+function paramsForFrame(i){
+  const t = i / (FRAMES-1);
+  // base params change per-mode; include a little wiggle so timeline is interesting
+  return {
+    a: lerp(-2.0, 2.0, Math.sin(t*Math.PI*2)*0.5 + 0.5*0 + t*0.7),
+    b: lerp(-2.0, 2.0, Math.cos(t*Math.PI*2.3)*0.5 + 0.5 + t*0.2),
+    c: lerp(-2.0, 2.0, Math.sin(t*Math.PI*1.7 + 0.7)*0.5 + 0.5 - t*0.3),
+    d: lerp(-2.0, 2.0, Math.cos(t*Math.PI*0.9)*0.5 + 0.5 + t*0.1),
+    t
+  };
+}
+
+// GENERATORS
+function drawClifford(ctx, w, h, p, iterations, scale, colorShift, alpha){
+  // Clifford attractor: x_{n+1} = sin(a*y) + c*cos(a*x)
+  const {a,b,c,d} = p;
+  let x=0.1, y=0.1;
+  ctx.clearRect(0,0,w,h);
+  ctx.globalAlpha = Math.max(0.01, alpha*0.8);
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0,0,w,h);
+  for(let i=0;i<iterations;i++){
+    const nx = Math.sin(a*y) + c * Math.cos(a*x);
+    const ny = Math.sin(b*x) + d * Math.cos(b*y);
+    x = nx; y = ny;
+    const px = Math.floor((x*scale + 1.5)/3 * w);
+    const py = Math.floor((y*scale + 1.5)/3 * h);
+    if(px>=0 && py>=0 && px<w && py<h){
+      const hue = ((Math.abs(x+y) * 360) + colorShift) % 360;
+      ctx.fillStyle = `hsla(${hue},90%,55%,${alpha})`;
+      ctx.fillRect(px, py, 1, 1);
+    }
+  }
+  ctx.globalAlpha = 1.0;
+}
+
+function drawDeJong(ctx,w,h,p,iterations,scale,colorShift,alpha){
+  // DeJong attractor
+  const {a,b,c,d} = p;
+  let x=0, y=0;
+  ctx.clearRect(0,0,w,h);
+  ctx.globalAlpha = Math.max(0.01, alpha*0.9);
+  ctx.fillStyle = 'black'; ctx.fillRect(0,0,w,h);
+  for(let i=0;i<iterations;i++){
+    const nx = Math.sin(a * y) - Math.cos(b * x);
+    const ny = Math.sin(c * x) - Math.cos(d * y);
+    x = nx; y = ny;
+    const px = Math.floor((x*scale + 2)/4 * w);
+    const py = Math.floor((y*scale + 2)/4 * h);
+    if(px>=0 && py>=0 && px<w && py<h){
+      const hue = ((Math.abs(Math.sin(i*0.01) + x+y) * 360)+colorShift) % 360;
+      ctx.fillStyle = `hsla(${hue},80%,55%,${alpha})`;
+      ctx.fillRect(px,py,1,1);
+    }
+  }
+  ctx.globalAlpha = 1.0;
+}
+
+function drawFlowField(ctx,w,h,p,iterations,scale,colorShift,alpha){
+  // simple particle flow field (bubble toy aesthetic)
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = 'rgba(0,0,0,0.08)';
+  ctx.fillRect(0,0,w,h);
+
+  // generate a small flow field using sin/cos + params
+  const cols = 40; const rows = 30;
+  const field = new Array(cols*rows);
+  for(let y=0;y<rows;y++){
+    for(let x=0;x<cols;x++){
+      const fx = x/cols; const fy = y/rows;
+      const angle = Math.sin((fx + p.a)*3.14 + p.t*6) + Math.cos((fy + p.b)*3.14 + p.t*4);
+      field[y*cols+x] = angle;
+    }
+  }
+
+  // draw some particles moving along the field
+  const n = Math.min(2000, iterations/2);
+  for(let i=0;i<n;i++){
+    let px = Math.random()*w, py = Math.random()*h;
+    const len = 10 + Math.random()*80;
+    ctx.beginPath();
+    for(let s=0;s<len;s++){
+      const cx = Math.floor(px / w * cols);
+      const cy = Math.floor(py / h * rows);
+      if(cx<0||cy<0||cx>=cols||cy>=rows) break;
+      const angle = field[cy*cols+cx];
+      px += Math.cos(angle) * 1.5 * (1.0/scale);
+      py += Math.sin(angle) * 1.5 * (1.0/scale);
+      if(s===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+    }
+    const hue = (Math.floor((i*7 + colorShift) % 360));
+    ctx.strokeStyle = `hsla(${hue},85%,55%,${alpha})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+}
+
+function drawLissajous(ctx,w,h,p,iterations,scale,colorShift,alpha){
+  // Lissajous-like bloom, many circles modulated by trig
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = 'black'; ctx.fillRect(0,0,w,h);
+  const n = Math.min(2000, iterations/2);
+  ctx.globalCompositeOperation = 'lighter';
+  for(let i=0;i<n;i++){
+    const t = p.t*10 + i*0.02;
+    const x = Math.sin((p.a*3.0+1.2)*t + i*0.01) * (w*0.35*scale) + w*0.5;
+    const y = Math.cos((p.b*2.6+0.8)*t + i*0.015) * (h*0.35*scale) + h*0.5;
+    const r = Math.max(0.5, 2 + Math.sin(i*0.03 + p.c)*8);
+    const hue = ((i*3 + colorShift) % 360);
+    ctx.fillStyle = `hsla(${hue},85%,60%,${alpha})`;
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+
+// draw a frame into a target ctx based on mode
+function renderInto(ctxTarget, w, h, frameIndex){
+  const p = paramsForFrame(frameIndex);
+  const mode = modeSelect.value;
+  const scale = parseFloat(scaleInput.value);
+  const iters = parseInt(iterInput.value,10);
+  const colorShift = parseFloat(colorShiftInput.value);
+  const alpha = parseFloat(alphaInput.value);
+  try{
+    if(mode==='clifford') drawClifford(ctxTarget,w,h,p,iters,scale,colorShift,alpha);
+    else if(mode==='deJong') drawDeJong(ctxTarget,w,h,p,iters,scale,colorShift,alpha);
+    else if(mode==='flow') drawFlowField(ctxTarget,w,h,p,iters,scale,colorShift,alpha);
+    else if(mode==='lissajous') drawLissajous(ctxTarget,w,h,p,iters,scale,colorShift,alpha);
+  }catch(e){
+    console.error('render error',e);
+  }
+}
+
+// create thumbnail canvases
+function createThumbnails(){
+  thumbsContainer.innerHTML=''; thumbnails = [];
+  const thumbSize = parseInt(thumbSizeInput.value,10);
+  for(let i=0;i<FRAMES;i++){
+    const box = document.createElement('div');
+    box.className='thumb';
+    box.dataset.index = i;
+    box.style.height = thumbSize + 'px';
+    const c = document.createElement('canvas');
+    c.width = Math.max(64, Math.floor(thumbSize*3));
+    c.height = Math.max(24, Math.floor(thumbSize));
+    box.appendChild(c);
+    thumbsContainer.appendChild(box);
+    const cctx = c.getContext('2d');
+    thumbnails.push({box,canvas:c,ctx:cctx});
+
+    box.addEventListener('click', ()=>{
+      currentFrame = parseInt(box.dataset.index,10);
+      frameRange.value = currentFrame; frameVal.textContent = currentFrame;
+      drawMain();
+      highlightThumb(currentFrame);
+    });
+  }
+}
+
+function highlightThumb(i){
+  thumbnails.forEach((t,idx)=>{
+    t.box.classList.toggle('active', idx===i);
+  });
+}
+
+// generate all thumbnails by rendering lower-iteration previews
+function generateThumbnails(){
+  const thumbSize = parseInt(thumbSizeInput.value,10);
+  const promises = [];
+  for(let i=0;i<FRAMES;i++){
+    const target = thumbnails[i];
+    // render smaller and faster
+    renderInto(target.ctx, target.canvas.width, target.canvas.height, i);
+  }
+}
+
+// main draw
+function drawMain(){
+  // clear and draw current frame with full iterations
+  const w = mainCanvas.width; const h = mainCanvas.height;
+  renderInto(ctx, w, h, currentFrame);
+  frameVal.textContent = currentFrame;
+  highlightThumb(currentFrame);
+}
+
+// playback
+function tick(){
+  if(playing){
+    currentFrame = (currentFrame + playSpeed) % FRAMES;
+    frameRange.value = currentFrame; frameVal.textContent = currentFrame;
+    drawMain();
+  }
+  requestAnimationFrame(tick);
+}
+
+// UI wiring
+frameRange.addEventListener('input', ()=>{
+  currentFrame = parseInt(frameRange.value,10);
+  frameVal.textContent = currentFrame;
+  drawMain();
+});
+
+playBtn.addEventListener('click', ()=>{
+  playing = !playing; playBtn.textContent = playing ? '⏸' : '▶';
+});
+
+rewBtn.addEventListener('click', ()=>{ currentFrame = Math.max(0, currentFrame-5); frameRange.value = currentFrame; drawMain(); });
+ffBtn.addEventListener('click', ()=>{ currentFrame = Math.min(FRAMES-1, currentFrame+5); frameRange.value = currentFrame; drawMain(); });
+
+modeSelect.addEventListener('change', ()=>{ generateThumbnails(); drawMain(); });
+regenBtn.addEventListener('click', ()=>{ generateThumbnails(); drawMain(); });
+scaleInput.addEventListener('input', ()=>{ generateThumbnails(); drawMain(); });
+iterInput.addEventListener('input', ()=>{ generateThumbnails(); drawMain(); });
+colorShiftInput.addEventListener('input', ()=>{ generateThumbnails(); drawMain(); });
+alphaInput.addEventListener('input', ()=>{ drawMain(); });
+thumbSizeInput.addEventListener('input', ()=>{ createThumbnails(); generateThumbnails(); });
+
+// initialize
+(function init(){
+  // size main canvas to fit container nicely
+  function resizeMain(){
+    const rect = mainCanvas.getBoundingClientRect();
+    // keep a fixed pixel size for crispness
+    mainCanvas.width = Math.floor(rect.width * devicePixelRatio);
+    mainCanvas.height = Math.floor(rect.height * devicePixelRatio);
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  window.addEventListener('resize', ()=>{ resizeMain(); drawMain(); });
+  resizeMain();
+  createThumbnails();
+  generateThumbnails();
+  drawMain();
+  tick();
+})();
+
+</script>
+</body>
+</html>

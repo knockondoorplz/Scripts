@@ -1,0 +1,473 @@
+﻿[
+    {
+        "id":  1,
+        "filename":  "OllamaControl.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\Ollama\\OllamaControl.ahk",
+        "created":  "2026-01-07 12:22:13",
+        "modified":  "2026-08-13 00:25:49",
+        "hotkeys":  [
+                        "^!s",
+                        "^!c",
+                        "^!m",
+                        "!q",
+                        "^!q",
+                        "^+q",
+                        "^+!m"
+                    ]
+    },
+    {
+        "id":  2,
+        "filename":  "Virescent.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\plasma-sprite\\Virescent.ahk",
+        "created":  "2026-03-16 23:03:55",
+        "modified":  "2026-03-17 00:03:11",
+        "hotkeys":  [
+                        "+!v"
+                    ]
+    },
+    {
+        "id":  3,
+        "filename":  "MyCommands.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\MyCommands.ahk",
+        "created":  "2026-06-09 16:00:26",
+        "modified":  "2026-07-17 00:14:58",
+        "hotkeys":  [
+                        "^+j"
+                    ]
+    },
+    {
+        "id":  4,
+        "filename":  "AppendPalette.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AppendPalette.ahk",
+        "created":  "2026-06-23 14:12:39",
+        "modified":  "2026-08-07 14:19:23",
+        "hotkeys":  [
+                        "#+a",
+                        "+#!a"
+                    ]
+    },
+    {
+        "id":  5,
+        "filename":  "GitDiff.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\GitDiff.ahk",
+        "created":  "2026-05-13 13:56:32",
+        "modified":  "2026-05-13 14:01:36",
+        "hotkeys":  [
+                        "^#!d"
+                    ]
+    },
+    {
+        "id":  6,
+        "filename":  "AutoDiff.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AutoDiff.ahk",
+        "created":  "2026-06-15 21:31:10",
+        "modified":  "2026-08-01 09:35:53",
+        "hotkeys":  [
+                        "#!d",
+                        "#!b"
+                    ]
+    },
+    {
+        "id":  7,
+        "filename":  "DiffWatcher.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\DiffWatcher.ahk",
+        "created":  "2026-06-25 23:58:59",
+        "modified":  "2026-07-01 13:02:11",
+        "hotkeys":  [
+                        "^!d",
+                        "^!p"
+                    ]
+    },
+    {
+        "id":  8,
+        "filename":  "RegisterScript.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RegisterScript.ahk",
+        "created":  "2026-06-18 22:23:16",
+        "modified":  "2026-07-16 17:06:56",
+        "hotkeys":  [
+                        "^#!m"
+                    ]
+    },
+    {
+        "id":  9,
+        "filename":  "OpenInNotepad.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\OpenInNotepad.ahk",
+        "created":  "2026-06-25 00:01:38",
+        "modified":  "2026-06-30 02:18:09",
+        "hotkeys":  [
+                        "#n"
+                    ]
+    },
+    {
+        "id":  10,
+        "filename":  "RunLastModified.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunLastModified.ahk",
+        "created":  "2026-06-09 15:37:31",
+        "modified":  "2026-06-15 20:45:08",
+        "hotkeys":  [
+                        "#!l"
+                    ]
+    },
+    {
+        "id":  11,
+        "filename":  "Add-LastInstalledToPath.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Add-LastInstalledToPath.ahk",
+        "created":  "2026-05-18 16:08:45",
+        "modified":  "2026-05-18 16:20:25",
+        "hotkeys":  [
+                        "#!p"
+                    ]
+    },
+    {
+        "id":  12,
+        "filename":  "MusicDownloader.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\MusicDownloader.ahk",
+        "created":  "2026-03-12 23:43:24",
+        "modified":  "2026-07-31 20:00:48",
+        "hotkeys":  [
+                        "+!p"
+                    ]
+    },
+    {
+        "id":  13,
+        "filename":  "VPNManualOverride.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\VPNManualOverride.ahk",
+        "created":  "2026-07-10 16:29:55",
+        "modified":  "2026-07-10 16:30:32",
+        "hotkeys":  [
+                        "^+!v",
+                        "^+#v"
+                    ]
+    },
+    {
+        "id":  14,
+        "filename":  "VPNActivate.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\VPNActivate.ahk",
+        "created":  "2026-07-10 16:40:55",
+        "modified":  "2026-07-10 17:52:18",
+        "hotkeys":  [
+                        "^#!V",
+                        "+#!V"
+                    ]
+    },
+    {
+        "id":  15,
+        "filename":  "PeekatdesktopLR.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\PeekatdesktopLR.ahk",
+        "created":  "2026-05-31 10:55:46",
+        "modified":  "2026-06-22 01:00:40",
+        "hotkeys":  [
+                        "#!Left",
+                        "#!Right"
+                    ]
+    },
+    {
+        "id":  16,
+        "filename":  "RemapShowDesktop.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RemapShowDesktop.ahk",
+        "created":  "2026-05-29 13:24:29",
+        "modified":  "2026-05-29 13:24:32",
+        "hotkeys":  [
+                        "~LAlt"
+                    ]
+    },
+    {
+        "id":  17,
+        "filename":  "ChatGPTWindow.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\ChatGPTWindow.ahk",
+        "created":  "2026-06-15 19:52:09",
+        "modified":  "2026-06-15 23:45:30",
+        "hotkeys":  [
+                        "#!c"
+                    ]
+    },
+    {
+        "id":  18,
+        "filename":  "SetRainmeterLayout.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\SetRainmeterLayout.ahk",
+        "created":  "2026-06-09 14:58:24",
+        "modified":  "2026-08-13 00:47:04",
+        "hotkeys":  [
+                        "+#!1",
+                        "+#!2",
+                        "+#!3",
+                        "+#!4"
+                    ]
+    },
+    {
+        "id":  19,
+        "filename":  "RunExplorer.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunExplorer.ahk",
+        "created":  "2026-05-31 10:41:17",
+        "modified":  "2026-05-31 10:41:18",
+        "hotkeys":  [
+                        "^#!r"
+                    ]
+    },
+    {
+        "id":  20,
+        "filename":  "RestartExplorer.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RestartExplorer.ahk",
+        "created":  "2026-05-31 10:26:29",
+        "modified":  "2026-05-31 10:42:29",
+        "hotkeys":  [
+                        "#!r"
+                    ]
+    },
+    {
+        "id":  21,
+        "filename":  "RunMemoryFlush.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunMemoryFlush.ahk",
+        "created":  "2026-06-07 18:24:02",
+        "modified":  "2026-06-07 18:37:15",
+        "hotkeys":  [
+                        "#!m"
+                    ]
+    },
+    {
+        "id":  22,
+        "filename":  "RunNascarahk.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunNascarahk.ahk",
+        "created":  "2026-05-28 13:00:52",
+        "modified":  "2026-05-28 13:07:58",
+        "hotkeys":  [
+                        "^#!n"
+                    ]
+    },
+    {
+        "id":  23,
+        "filename":  "RunNascarps1.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunNascarps1.ahk",
+        "created":  "2026-05-28 12:51:01",
+        "modified":  "2026-08-12 03:14:26",
+        "hotkeys":  [
+                        "+#!n"
+                    ]
+    },
+    {
+        "id":  24,
+        "filename":  "CurrentWindowNewPowershell.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\CurrentWindowNewPowershell.ahk",
+        "created":  "2026-05-16 12:33:59",
+        "modified":  "2026-05-16 15:59:58",
+        "hotkeys":  [
+                        "^!t",
+                        "^!a"
+                    ]
+    },
+    {
+        "id":  25,
+        "filename":  "CurrentWindowPowershellAuto.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\CurrentWindowPowershellAuto.ahk",
+        "created":  "2026-05-16 15:19:43",
+        "modified":  "2026-08-02 13:12:43",
+        "hotkeys":  [
+                        "+!a"
+                    ]
+    },
+    {
+        "id":  26,
+        "filename":  "OmniPalettev0.1.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\OmniPalettev0.1.ahk",
+        "created":  "2026-07-22 16:44:38",
+        "modified":  "2026-08-18 17:09:03",
+        "hotkeys":  [
+                        "!Space",
+                        "Esc",
+                        "^!l",
+                        "^+!l",
+                        "^+!c",
+                        "^+#c",
+                        "^#1",
+                        "^#2",
+                        "^#3",
+                        "^#4",
+                        "^#5",
+                        "^#6",
+                        "^#7",
+                        "^#8",
+                        "^#9",
+                        "^#0"
+                    ]
+    },
+    {
+        "id":  27,
+        "filename":  "stack_pngs_hotkey.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\stack_pngs_hotkey.ahk",
+        "created":  "2026-03-03 11:59:21",
+        "modified":  "2026-03-01 22:22:41",
+        "hotkeys":  [
+                        "^!`"
+                    ]
+    },
+    {
+        "id":  28,
+        "filename":  "stacktext_hotkey.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\stacktext_hotkey.ahk",
+        "created":  "2026-02-26 00:28:30",
+        "modified":  "2026-06-26 17:00:34",
+        "hotkeys":  [
+                        "^+`",
+                        "^+#`"
+                    ]
+    },
+    {
+        "id":  29,
+        "filename":  "DisplayToDo.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\DisplayToDo.ahk",
+        "created":  "2026-08-01 08:37:51",
+        "modified":  "2026-08-06 23:35:15",
+        "hotkeys":  [
+                        "^+!j",
+                        "^#j",
+                        "+!j"
+                    ]
+    },
+    {
+        "id":  30,
+        "filename":  "ToDoPopup.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\ToDoPopup.ahk",
+        "created":  "2026-08-01 09:13:53",
+        "modified":  "2026-08-22 21:04:53",
+        "hotkeys":  [
+                        "^!j",
+                        "^+!j",
+                        "^+#j",
+                        "\u003e^j",
+                        "\u003e^!j",
+                        "Esc",
+                        "!n",
+                        "^f",
+                        "^h",
+                        "^s"
+                    ]
+    },
+    {
+        "id":  31,
+        "filename":  "WindowEcology.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\Window Physics\\WindowEcology.ahk",
+        "created":  "2026-07-20 17:34:11",
+        "modified":  "2026-08-04 02:59:59",
+        "hotkeys":  [
+                        "+#s",
+                        "^#r",
+                        "^#+r",
+                        "^#l",
+                        "^#k",
+                        "^#q",
+                        "^#y",
+                        "^#n",
+                        "^#o"
+                    ]
+    },
+    {
+        "id":  32,
+        "filename":  "TypeStream.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\TypeStream\\TypeStream.ahk",
+        "created":  "2026-07-07 00:45:13",
+        "modified":  "2026-08-06 16:36:09",
+        "hotkeys":  [
+
+                    ]
+    },
+    {
+        "id":  33,
+        "filename":  "ChronologBridge.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\BiomeCore\\ChronologBridge.ahk",
+        "created":  "2026-06-17 16:53:28",
+        "modified":  "2026-08-13 00:25:43",
+        "hotkeys":  [
+                        "^#b",
+                        "#!q",
+                        "^#s"
+                    ]
+    },
+    {
+        "id":  34,
+        "filename":  "AnywhereCommands.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AnywhereCommands.ahk",
+        "created":  "2026-08-08 13:42:30",
+        "modified":  "2026-08-13 00:42:15",
+        "hotkeys":  [
+                        "^#!1",
+                        "^#!2",
+                        "^#!3",
+                        "^#!4",
+                        "^#!5",
+                        "^#!7",
+                        "^#!8",
+                        "^#!9",
+                        "^#!0",
+                        "^+#1",
+                        "^+#2",
+                        "^+#3",
+                        "^+#z",
+                        "^+#n",
+                        "^+0"
+                    ]
+    },
+    {
+        "id":  35,
+        "filename":  "Macros.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Macros.ahk",
+        "created":  "2026-08-12 15:08:48",
+        "modified":  "2026-08-13 00:16:13",
+        "hotkeys":  [
+                        "\u003e^j",
+                        "\u003e^k",
+                        "\u003e^i",
+                        "+#R",
+                        "+#P",
+                        "^#!x",
+                        "^#Left",
+                        "^#Right",
+                        "^!F",
+                        "^+!6",
+                        "^+!7",
+                        "^+#7",
+                        "^+!8",
+                        "+!F"
+                    ]
+    },
+    {
+        "id":  36,
+        "filename":  "AnywherePowerShell.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AnywherePowerShell.ahk",
+        "created":  "2026-08-18 16:34:44",
+        "modified":  "2026-08-18 16:53:15",
+        "hotkeys":  [
+
+                    ]
+    },
+    {
+        "id":  37,
+        "filename":  "NotebookTranspUp.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\NotebookTranspUp.ahk",
+        "created":  "2026-08-20 00:44:13",
+        "modified":  "2026-08-20 04:41:17",
+        "hotkeys":  [
+                        "#!t"
+                    ]
+    },
+    {
+        "id":  38,
+        "filename":  "NotebookGradientFill.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\NotebookGradientFill.ahk",
+        "created":  "2026-08-20 01:42:10",
+        "modified":  "2026-08-20 19:21:50",
+        "hotkeys":  [
+                        "#!g"
+                    ]
+    },
+    {
+        "id":  39,
+        "filename":  "Inspector.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Inspector.ahk",
+        "created":  "2026-06-21 13:14:08",
+        "modified":  "2026-06-22 19:52:20",
+        "hotkeys":  [
+                        "#!i",
+                        "^Esc"
+                    ]
+    }
+]

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Virescent Aeon — Algebraic Glyph Familiar</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      height: 100%;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+    #hud {
+      position: fixed;
+      right: 10px;
+      top: 8px;
+      padding: 4px 7px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 11px;
+      color: rgba(220, 234, 255, 0.8);
+      background: linear-gradient(180deg, rgba(8,10,18,0.78), rgba(6,8,16,0.55));
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(7px);
+      pointer-events: none;
+      z-index: 10;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="aeon"></canvas>
+  <div id="hud">Aeon: edge · ℵ geometry · idle
+  <br/>[1] edge  [2] wander  [3] geometry  [G] cycle geometry  [H] hide HUD</div>
+
+  <script>
+  // Virescent Aeon — a next-gen organism meant for an always-on-top, click-through Electron overlay.
+  // It fuses:
+  // - algebraic / parametric motion (lemniscates, Lissajous, spirals)
+  // - glyph exhaust (exotic runes as particles)
+  // - temporal aliasing + teleport ghosting
+  // - edge patrol + idle geometry rituals
+
+  const canvas = document.getElementById('aeon');
+  const ctx = canvas.getContext('2d', { alpha: true });
+
+  let W = window.innerWidth;
+  let H = window.innerHeight;
+
+  function resize() {
+    const screens = window.screen;
+    W = screens.width;
+    H = screens.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const aeon = {
+    x: W / 2,
+    y: H / 2,
+    vx: 0,
+    vy: 0,
+    tail: [],
+    tailLen: 28,
+    glow: 1,
+    mode: 'edge',
+    geomMode: 'lemniscate',
+    baseHue: 190,
+    idlePhase: 0,
+  };
+
+  const geomModes = ['lemniscate', 'lissajous', 'spiral', 'orbit'];
+
+  // ---------- RUNES / SYMBOLS ----------
+  // Master glyph set from the Algebraic / Holographic prototype.
+  // You can override this at runtime by defining window.AEON_GLYPHS = [...].
+  const MASTER_GLYPHS = (window.AEON_GLYPHS && Array.isArray(window.AEON_GLYPHS) && window.AEON_GLYPHS.length)
+    ? window.AEON_GLYPHS
+    : ["ᚠ","ᚢ","ᚦ","ᚨ","ᚱ","ᚲ","ᚹ","ᛉ","ᛋ","ᛏ","ᛒ","ᛗ","ᛟ","ᛞ","ᛝ","᚛","᚜","۞","₪","✧","ᚾ","߷","౨","ᔑ","ﺝ","ﬡ","ꭍ","Ω","Σ","Ⰹ","Ⱑ","Ⰿ","Ⰴ","-","+","÷","x","z","!","?","0","1","%","#","°","æ","ƹ","ƨ","ʊ","ɔ","ə","ʢ","ʺ","Ω","Δ","Φ","Ψ","π","ҩ","Պ","Հ","Ձ","Ճ","Չ","Պ","ל","ᴕ","ע","פ","ץ","צ","ᵹ","ᵶ","‽","ꬽ","ꭅ","ꭥ","ꝋ","j","xy","n","∂","↓","∞","√","∙","∫","≠","≡","☼","▼","▲","☺","☻","►","◄","◌","ⱼ","⸗","ꜟ","Ꜣ","ꜣ","ꜫ","ꝫ","Ꝧ","ꝛ","ꝰ","ꝸ","Ᵹ","Ꝿ","ꞇ","ꞓ","◊","ﮊ","ﭐ","ﭒ","ﮥ","ﮭ","ﮪ","﮸","ﻁ","ﻞ","ﻍ","ﻜ","ﻡ","ﻥ","ﻩ","ﯓ","ﯕ","ﷴ","ﯱ","ﻱ","﴿","﴾","ꭋ"];
+  const RUNES = MASTER_GLYPHS;
+  const pickRune = () => RUNES[Math.floor(Math.random() * RUNES.length)];
+
+  // Array to store glyph particles
+  const glyphs = [];
+  // GlyphParticle class to manage individual glyphs
+  class GlyphParticle {
+    constructor(x, y, baseHue) {
+      this.x = x;
+      this.y = y;
+      this.vx = Math.random() * 2 - 1;
+      this.vy = Math.random() * 2 - 1;
+      this.life = Math.random() * 1000 + 500; // lifespan in ms
+      this.age = 0;
+      this.rune = pickRune(); // Use a rune from the MASTER_GLYPHS set
+      this.baseHue = baseHue;
+    }
+
+    update(dt) {
+      this.age += dt;
+      if (this.age > this.life) return false; // Remove particle if it exceeds its lifespan
+
+      this.x += this.vx;
+      this.y += this.vy;
+      return true;
+    }
+
+    draw(ctx) {
+      const alpha = 1 - this.age / this.life;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = `hsla(${this.baseHue}, 70%, 50%, ${alpha})`;
+      ctx.font = '16px sans-serif';
+      ctx.fillText(this.rune, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  // Enhanced behaviors for lifelike actions
+  function update(dt, dtMs, now) {
+    const idle = mouse.seen && (now - mouse.lastMove) > 8000;
+    if (idle) aeon.idlePhase += dt; else aeon.idlePhase = Math.max(0, aeon.idlePhase - dt * 0.8);
+
+    let target = null;
+
+    if (aeon.mode === 'edge') {
+      const rect = { x: 40, y: 40, w: W - 80, h: H - 80 };
+      const tNorm = (now * 0.00004) % 1;
+      target = { x: rect.x + tNorm * rect.w, y: rect.y + tNorm * rect.h };
+    } else if (aeon.mode === 'wander') {
+      if (!aeon._wanderTarget || Math.random() < 0.01) {
+        aeon._wanderTarget = {
+          x: Math.random() * W,
+          y: Math.random() * H,
+        };
+      }
+      target = aeon._wanderTarget;
+    } else if (aeon.mode === 'geometry') {
+      const cx = W / 2;
+      const cy = H / 2;
+      const R = Math.min(W, H) * 0.18;
+      const ang = now * 0.0006;
+      target = { x: cx + Math.cos(ang) * R, y: cy + Math.sin(ang) * R };
+    }
+
+    if (mouse.seen) {
+      const d = Math.hypot(aeon.x - mouse.x, aeon.y - mouse.y);
+      if (d < 120 && !aeon.dashing) {
+        const peekBehind = {
+          x: mouse.x - mouse.deltaX * 5,
+          y: mouse.y - mouse.deltaY * 5,
+        };
+        target = peekBehind;
+      }
+      if (!aeon.dashing && d > 220 && Math.hypot(mouse.deltaX, mouse.deltaY) > 30 && Math.random() < 0.02) {
+        dashToward(mouse.x, mouse.y);
+      }
+    }
+
+    if (aeon.dashing && now - aeon.lastDash > 320) aeon.dashing = false;
+
+    if (target) {
+      const dx = target.x - aeon.x;
+      const dy = target.y - aeon.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const speedBase = 80; // Slower base speed
+      const speed = speedBase * (aeon.dashing ? 1.5 : 1.0) * (1 + aeon.idlePhase * 0.3);
+      const desiredVx = (dx / dist) * speed;
+      const desiredVy = (dy / dist) * speed;
+      const mix = clamp(3 * dt * (1 + aeon.idlePhase * 0.3), 0.04, 0.6);
+      aeon.vx = lerp(aeon.vx, desiredVx, mix);
+      aeon.vy = lerp(aeon.vy, desiredVy, mix);
+    } else {
+      aeon.vx = lerp(aeon.vx, rand(-20, 20), 0.02);
+      aeon.vy = lerp(aeon.vy, rand(-20, 20), 0.02);
+    }
+
+    aeon.x += aeon.vx * dt;
+    aeon.y += aeon.vy * dt;
+
+    if (aeon.x < -50) aeon.x = W + 50; // Wrap around horizontally
+    if (aeon.x > W + 50) aeon.x = -50;
+    if (aeon.y < -50) aeon.y = H + 50; // Wrap around vertically
+    if (aeon.y > H + 50) aeon.y = -50;
+
+    const targetGlow = aeon.dashing ? 2.4 : (idle ? 1.3 : 0.9);
+    aeon.glow = lerp(aeon.glow, targetGlow, dt * 4.0);
+
+    aeon.tail.unshift({ x: aeon.x, y: aeon.y, t: now });
+    while (aeon.tail.length > aeon.tailLen) aeon.tail.pop();
+
+    for (let i = glyphs.length - 1; i >= 0; i--) {
+      const alive = glyphs[i].update(dtMs);
+      if (!alive) glyphs.splice(i, 1);
+    }
+  }
+
+  // Dual-screen behavior
+  function dualScreenBehavior() {
+    const centerX = W / 2;
+    const centerY = H / 2;
+    aeon.x = centerX;
+    aeon.y = centerY;
+    aeon.vx = 0;
+    aeon.vy = -50; // Slowly climb upwards
+  }
+
+  if (Math.random() < 0.002) {
+    dualScreenBehavior();
+  }
+
+  // Debugging logs to confirm rendering loop
+  console.log('Rendering loop initialized.');
+
+  // Add glyphs rendering back into the render loop
+  function render(now) {
+    ctx.clearRect(0, 0, W, H);
+
+    // Debugging log for render loop
+    console.log('Render loop running at time:', now);
+    console.log('Aeon position:', aeon.x, aeon.y);
+
+    // Draw the sprite
+    ctx.save();
+    ctx.translate(aeon.x, aeon.y);
+    ctx.beginPath();
+    ctx.arc(0, 0, 20, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${aeon.baseHue}, 70%, 50%, ${aeon.glow})`;
+    ctx.fill();
+    ctx.restore();
+
+    // Render the tail
+    ctx.beginPath();
+    for (let i = 0; i < aeon.tail.length; i++) {
+      const t = aeon.tail[i];
+      ctx.lineTo(t.x, t.y);
+    }
+    ctx.strokeStyle = `hsla(${aeon.baseHue}, 70%, 50%, 0.5)`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Render glyph particles
+    for (const glyph of glyphs) {
+      glyph.draw(ctx);
+    }
+  }
+
+  // Utility function to clamp a value between a minimum and maximum
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  // Utility function to linearly interpolate between two values
+  function lerp(start, end, t) {
+    return start + (end - start) * t;
+  }
+
+  // Define the mouse object to track pointer movement
+  const mouse = { x: W / 2, y: H / 2, lastMove: 0, deltaX: 0, deltaY: 0, seen: false };
+
+  // Add event listener for pointer movement
+  window.addEventListener('pointermove', e => {
+    const oldX = mouse.x;
+    const oldY = mouse.y;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.deltaX = mouse.x - oldX;
+    mouse.deltaY = mouse.y - oldY;
+    mouse.lastMove = performance.now();
+    mouse.seen = true;
+  });
+
+  // Check if running in Electron
+  const isElectron = navigator.userAgent.toLowerCase().includes('electron');
+
+  // Conditionally hide HUD in Electron
+  if (isElectron) {
+    const hudEl = document.getElementById('hud');
+    if (hudEl) hudEl.style.display = 'none';
+  }
+
+  // Show HUD only in the browser
+  if (typeof require === 'undefined') {
+    document.getElementById('hud').style.display = 'block';
+  } else {
+    document.getElementById('hud').style.display = 'none';
+  }
+
+  // Ensure rendering logic works in the browser
+  window.addEventListener('error', (e) => {
+    console.error('Error occurred:', e.message);
+  });
+
+  // Ensure compatibility with both Electron and browser
+  if (typeof require !== 'undefined' && typeof require('electron') !== 'undefined') {
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on('resize', () => {
+      resize();
+    });
+  } else {
+    console.log('Running in browser mode. Electron-specific features are disabled.');
+  }
+
+  let lastTime = performance.now();
+
+  function tick(now) {
+    const dtMs = now - lastTime;
+    const dt = Math.min(dtMs / 1000, 0.1);
+    lastTime = now;
+
+    update(dt, dtMs, now);
+    render(now);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function dashToward(px, py) {
+    aeon.dashing = true;
+    aeon.lastDash = performance.now();
+    const dx = px - aeon.x;
+    const dy = py - aeon.y;
+    const dist = Math.hypot(dx, dy) || 1;
+    const speed = 520; // still quick, but not frantic
+    aeon.vx = (dx / dist) * speed;
+    aeon.vy = (dy / dist) * speed;
+  }
+  </script>
+</body>
+</html>

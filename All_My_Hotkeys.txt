@@ -1,0 +1,88 @@
+#!p:: Add-LastInstalledToPath.ahk
+#!s:: AddLastCreatedtoStartup.ahk
+#+a:: AppendPalette - Copy.ahk
+^#a:: AppendPalette - Copy.ahk
+#+a:: AppendPalette.ahk
+^#a:: AppendPalette.ahk
+#!d:: AutoDiff - Copy.ahk
+#!b:: AutoDiff - Copy.ahk
+#!b:: AutoDiff - Works.ahk
+#!d:: AutoDiff - Works.ahk
+#!d:: AutoDiff.ahk
+^!l:: BatchCleanSelectedText.ahk
+^!k:: BatchCleanUpward.ahk
+#!c:: ChatGPTWindow.ahk
+^+!c:: ClipAppend.ahk
+^+#c:: ClipAppend.ahk
+^!t:: CurrentWindowNewPowershell.ahk
+^!a:: CurrentWindowNewPowershell.ahk
+^!a:: CurrentWindowPowershellAuto.ahk
+^+d:: DeleteCurrentWallpaper.ahk
+^!b:: DiffWatcher - Color.ahk
+^!w:: DiffWatcher - Color.ahk
+^!d:: DiffWatcher - Color.ahk
+^!p:: DiffWatcher - Color.ahk
+^!d:: DiffWatcher.ahk
+^!p:: DiffWatcher.ahk
+F1:: FLComplexCurveMap.ahk
+F1:: FLHelperScript.ahk
+F2:: FLHelperScript.ahk
+^e:: FLHelperScript.ahk
+^s:: FLHelperScript.ahk
+F3:: FLHelperScript.ahk
+F4:: FLHelperScript.ahk
+F1:: FLRenameMixerTrack.ahk
+F1:: FLVisualLinker.ahk
+^#!d:: GitDiff.ahk
+; Matches lines that have a hotkey assignment (contains:: HotkeyParser.ahk
+if (InStr(A_LoopReadLine, ":: HotkeyParser.ahk
+~LAlt:: HotkeyRemapShowDesktop.ahk
+LAlt & RAlt:: HotkeyRemapShowDesktop.ahk
+RAlt & LAlt:: HotkeyRemapShowDesktop.ahk
+^#!k:: KillOthers.ahk
+^+`:: Minimal AHK Test.ahk
+^#m:: MoveRecurseTopLevel.ahk
+#!t:: MoveTimeController.ahk
++!p:: MusicDownloader - Copy.ahk
+#!y:: MusicDownloader.ahk
+^+h:: MyCommands - Copy (2).ahk
+return StrCompare(Trim(StrSplit(a, ":: MyCommands - Copy (2).ahk
+^+h:: MyCommands - Copy.ahk
+^+!h:: MyCommands - Flip.ahk
+^+h:: MyCommands - Flip.ahk
+; Index 2 is the filename part (after the:: MyCommands - Flip.ahk
+; Index 1 is the hotkey part (before the:: MyCommands - Flip.ahk
+^+!h:: MyCommands - Sort.ahk
+^+h:: MyCommands - Sort.ahk
+; Format 1:: MyCommands - Sort.ahk
+; Format 2:: MyCommands - Sort.ahk
+#n:: OpenInNotepad - Copy.ahk
+#n:: OpenInNotepad.ahk
+#!Left:: PeekatdesktopLR.ahk
+#!Right:: PeekatdesktopLR.ahk
+^+r:: RefactorOrchestrator.ahk
+^#!m:: RegisterScript - Copy.ahk
+^#!m:: RegisterScript.ahk
+if ([string]:: RemoveStrippedFiles.ahk
+if (![string]:: RemoveStrippedFiles.ahk
+$cleanRawArtist = [regex]:: RemoveStrippedFiles.ahk
+^#!a:: ResetAHK - Copy.ahk
+#!r:: RestartExplorer.ahk
+^#!r:: RunAHK - Copy.ahk
+^#!r:: RunExplorer.ahk
+#!l:: RunLastModified.ahk
+#!m:: RunMemoryFlush.ahk
+^#!n:: RunNascarahk.ahk
+^#!f:: RunNascarps1.ahk
+#!o:: SetOllamaControl.ahk
+^#!1:: SetRainmeterLayout.ahk
+^#!2:: SetRainmeterLayout.ahk
+^#!3:: SetRainmeterLayout.ahk
+^#!Numpad1:: SetRainyWallpaper.ahk
+^#!Numpad2:: SetRainyWallpaper.ahk
+^#!Numpad3:: SetRainyWallpaper.ahk
+^#!Numpad0:: SetRainyWallpaper.ahk
+^+`:: stacktext_hotkey.ahk
+^+#`:: stacktext_hotkey.ahk
+^!`:: stack_pngs_hotkey.ahk
+^#r:: WindowSorcery.ahk

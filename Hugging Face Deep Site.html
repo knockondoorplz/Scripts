@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeWizard Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-12">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">CodeWizard Academy</h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">Master the arcane arts of Python and Shell scripting with our interactive learning platform</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-purple-500 transition-all">
+                <div class="flex items-center mb-6">
+                    <div class="bg-purple-500 p-3 rounded-lg mr-4">
+                        <i data-feather="code" class="text-white"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">Python Path</h2>
+                </div>
+                <p class="text-gray-400 mb-6">Begin your journey into Python programming with our structured learning path covering syntax, data structures, and real-world applications.</p>
+                <a href="python.html" class="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors">
+                    Start Learning <i data-feather="arrow-right" class="ml-2"></i>
+                </a>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-blue-500 transition-all">
+                <div class="flex items-center mb-6">
+                    <div class="bg-blue-500 p-3 rounded-lg mr-4">
+                        <i data-feather="terminal" class="text-white"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">Shell Scripting</h2>
+                </div>
+                <p class="text-gray-400 mb-6">Unlock the power of command line with PowerShell and Bash scripting lessons for automation and system administration.</p>
+                <a href="shell.html" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+                    Start Learning <i data-feather="arrow-right" class="ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl p-8 border border-gray-700">
+            <h2 class="text-2xl font-bold mb-6">Quick Start Guides</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <h3 class="font-bold mb-3 text-purple-400">Python Basics</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Variables & Data Types</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Control Structures</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Functions</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <h3 class="font-bold mb-3 text-blue-400">PowerShell</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Cmdlets</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Pipelines</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Scripting</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <h3 class="font-bold mb-3 text-green-400">Bash</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Basic Commands</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Shell Scripts</li>
+                        <li class="flex items-center"><i data-feather="check" class="mr-2 text-green-400 w-4"></i> Automation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+    
+    <script>
+        feather.replace();
+    </script>
+<script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
+</body>
+</html>

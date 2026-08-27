@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Control Panel\Colors]
+Window="245 247 250"
+WindowText="0 40 60"
+Menu="240 245 250"
+MenuText="0 40 60"
+ButtonFace="240 245 250"
+ButtonText="0 40 60"
+Highlight="0 127 255"
+HighlightText="255 255 255"
+GrayText="120 130 140"
+HotTrackingColor="0 127 255"
+InfoWindow="250 252 255"
+InfoText="0 40 60"

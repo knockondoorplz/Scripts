@@ -1,0 +1,46 @@
+$proc = Start-Process "C:\Program Files (x86)\Image-Line\FL Studio 2025\FL64.exe" -PassThru
+$proc.PriorityClass = "High"
+$proc.ProcessorAffinity = 0x8
+
+Option A — Replace your desktop/start menu shortcut with the boosted launcher
+
+Your FL shortcut would point to:
+
+powershell.exe -ExecutionPolicy Bypass -File "C:\Scripts\FL-Boosted.ps1"
+
+
+This is the cleanest and safest.
+
+You always click the icon → FL always launches optimized.
+
+Option B — Associate the real FL executable with your script
+
+Meaning:
+
+When anything launches FL, it actually launches the script first.
+
+This requires a registry tweak (I can generate it).
+It’s invisible and automatic.
+
+Option C — Create a scheduled task that intercepts FL launches
+
+A little esoteric, but it works like this:
+
+• Windows sees FL64.exe start
+• Instantly changes its affinity + priority
+
+No custom launcher needed.
+FL opens normally, but gets “rewired” 50ms after it appears.
+
+Option D — Patch FL’s process every time it runs
+
+A small background script watches for FL64.exe and optimizes it.
+
+This is the most “god DNA injection” version, because it works for any DAW or plugin host you want.
+
+Tell me which one fits your vibe
+
+If you want pure reliability with zero risk, Option A is king.
+If you want seamless magic where FL just always launches boosted without you running anything manually, Option C/D is the way.
+
+Choose the lane, and I’ll wire the entire thing for you.

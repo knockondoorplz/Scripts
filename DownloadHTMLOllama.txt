@@ -1,0 +1,75 @@
+You are an AI that identifies downloadable files on a webpage.
+
+Here is the HTML content of a webpage:
+[HTML_CONTENT_HERE]
+
+Your job:
+1. Analyze the page and find all links that point to downloadable files.
+2. Focus on the following file types (Omega List):
+
+ARCHIVES:
+.zip, .rar, .7z, .tar, .gz, .bz2, .xz, .iso
+
+INSTALLERS:
+.exe, .msi, .msix, .bat, .cmd, .sh, .ps1
+
+FONTS:
+.ttf, .otf, .woff, .woff2, .eot, .fon
+
+AUDIO:
+.wav, .aiff, .aif, .flac, .ogg, .opus, .mp3, .m4a, .aac
+
+VIDEO:
+.mp4, .mkv, .webm, .mov, .avi, .wmv, .flv, .m4v
+
+IMAGES:
+.png, .jpg, .jpeg, .gif, .webp, .bmp, .tiff, .svg
+
+RAINMETER / THEMES / UI:
+.rmskin, .msstyles, .theme, .wal, .wsz, .ico, .cur, .ani
+
+DAW PROJECTS:
+.flp, .als, .cpr, .logicx, .rpp
+
+PRESETS:
+.fxp, .fxb, .vstpreset, .aupreset, .adg, .nksf, .nki, .nkm, .syx
+
+MIDI / TABS:
+.mid, .midi, .gp3, .gp4, .gp5, .gpx, .gp
+
+TORRENTS:
+.torrent, magnet:? links
+
+CODE / SCRIPTS:
+.py, .js, .ts, .lua, .rb, .php, .go, .rs, .cpp, .c, .java, .json, .yaml, .yml, .toml, .ini, .cfg
+
+DOCUMENTS:
+.pdf, .doc, .docx, .rtf, .odt, .xls, .xlsx, .ods, .csv, .txt, .md
+
+3. Ignore:
+- social media links
+- ads
+- pagination
+- login buttons
+- “download” buttons that don’t actually link to files
+
+4. For each real downloadable file, return:
+- direct_url
+- file_type
+- confidence (0–100)
+- description
+- is_primary (true/false)
+
+Return ONLY valid JSON:
+
+{
+  "downloads": [
+    {
+      "direct_url": "",
+      "file_type": "",
+      "confidence": 0,
+      "description": "",
+      "is_primary": false
+    }
+  ]
+}

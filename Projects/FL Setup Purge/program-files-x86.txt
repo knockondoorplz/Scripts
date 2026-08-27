@@ -1,0 +1,197 @@
+
+    Directory: C:\Program Files (x86)
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            7/5/2024  8:58 PM                7-Zip
+d----           6/24/2024  1:10 AM                7tsp
+d----           8/26/2023  2:41 PM                AIMP
+d----           8/21/2025 12:05 AM                Apple So
+                                                  ftware 
+                                                  Update
+d----          10/24/2025  3:26 PM                Applicat
+                                                  ion 
+                                                  Verifier
+d----          11/27/2025  1:45 PM                Ares
+d----           8/11/2023  7:19 PM                Arturia
+d----            8/4/2023  3:22 AM                ASIO4ALL
+                                                   v2
+d----            5/5/2022 12:29 AM                AVAST 
+                                                  Software
+d----           8/21/2025 12:04 AM                Bonjour
+d----          11/15/2024 11:22 AM                Cakewalk
+d----           3/20/2023 12:20 PM                Canon
+d----           11/2/2017  4:09 AM                Cisco
+d----          10/24/2025  3:55 PM                Common 
+                                                  Files
+d----           8/12/2023 12:15 PM                CUBE 
+                                                  Samples
+d----          12/21/2022  6:45 PM                CyberLin
+                                                  k
+d----          11/19/2025 11:57 PM                Dropbox
+d----           4/15/2020  2:20 PM                EasyAnti
+                                                  Cheat
+d----            6/7/2024  8:44 PM                Electric
+                                                   Sheep
+d----           1/16/2024 12:39 PM                foobar20
+                                                  00
+d----           4/15/2018 11:41 AM                Free 
+                                                  MIDI to 
+                                                  MP3 Conv
+                                                  erter
+d----           2/22/2024 12:03 PM                Google
+da---           8/28/2024  8:54 PM                Guitar 
+                                                  Pro 5
+d----           5/17/2017 11:55 AM                Hewlett-
+                                                  Packard
+d----           4/25/2024  9:20 PM                High-Log
+                                                  ic Scana
+                                                  hand
+da---           5/20/2018 12:20 AM                HP
+d----           5/17/2017 11:58 AM                HP Inc
+d----           8/19/2025  3:27 PM                Image-Li
+                                                  ne
+d----           8/10/2023 10:48 AM                Inphonik
+d----           5/25/2024  1:04 PM                Intel
+d----            5/2/2025  5:33 PM                Internet
+                                                   
+                                                  Explorer
+d----           8/21/2024  4:41 PM                IObit
+d----           8/21/2025  3:15 PM                iPack Al
+                                                  ienware 
+                                                  Blue 
+                                                  Icon 
+                                                  Pack v1 
+                                                  w8 8.1 
+                                                  w10
+d----           8/25/2025 12:35 AM                iPack 
+                                                  DShepe 
+                                                  Steel 
+                                                  Viper 
+                                                  Blue w8 
+                                                  8.1 w10
+d----           4/14/2024 11:55 AM                iTop 
+                                                  Screen 
+                                                  Recorder
+d----           8/21/2025 12:11 AM                iTunes
+d----           8/11/2023  9:48 PM                iZotope
+d----            3/1/2020  6:28 PM                Jasc Sof
+                                                  tware 
+                                                  Inc
+d----           2/11/2018  6:05 PM                Lavasoft
+d----           7/30/2024  2:06 PM                LibreOff
+                                                  ice
+d----           8/15/2023  9:31 PM                Line6
+d----           8/12/2023 12:04 PM                Lunacy 
+                                                  Audio
+d----            3/4/2018  1:05 AM                McAfee
+d----           7/30/2024  1:40 PM                Microsof
+                                                  t
+d----           3/22/2023  5:03 AM                Microsof
+                                                  t GameIn
+                                                  put
+d----          10/24/2025  3:55 PM                Microsof
+                                                  t SDKs
+d----          10/20/2025 11:41 AM                Microsof
+                                                  t 
+                                                  Visual 
+                                                  Studio
+d----           11/3/2021  3:59 PM                Microsof
+                                                  t XNA
+d----          10/24/2025  3:54 PM                Microsof
+                                                  t.NET
+d----           4/15/2018 11:34 AM                MIDI to 
+                                                  MP3 Conv
+                                                  erter 3
+d----           4/28/2020  5:15 PM                Mozilla 
+                                                  Maintena
+                                                  nce 
+                                                  Service
+d----          10/20/2025 11:53 AM                MSBuild
+d----          11/15/2024 11:22 AM                MusicLab
+d----           5/24/2022  7:55 PM                Naturals
+                                                  oft
+d----           4/27/2024 12:13 PM                NexusFon
+                                                  t
+d----          12/21/2022  6:45 PM                NSIS Uni
+                                                  nstall I
+                                                  nformati
+                                                  on
+d----          12/26/2021  6:30 PM                NVIDIA C
+                                                  orporati
+                                                  on
+d-r--           11/2/2017  5:08 AM                Online 
+                                                  Services
+d----           1/22/2021  7:31 PM                OpenAL
+d----           6/28/2023  9:54 PM                Origin 
+                                                  Games
+d----           1/20/2023  5:22 PM                PhotoWor
+                                                  ks
+d----           8/20/2023  3:17 PM                Platinum
+                                                   Samples
+d----            7/9/2024  1:41 AM                QTTabBar
+d----           7/11/2020  1:18 PM                R.G. Mec
+                                                  hanics
+d----           8/24/2025  9:26 PM                RainWall
+                                                  paper
+da---           11/2/2017  4:11 AM                Realtek
+d----           4/19/2024  5:57 PM                RealWorl
+                                                  d 
+                                                  Cursor 
+                                                  Editor
+d----           8/22/2020 10:41 AM                Referenc
+                                                  e Assemb
+                                                  lies
+d----            8/2/2023 12:46 AM                Samsung
+d----            8/6/2025  2:56 PM                SanDisk
+d----           8/18/2023  6:25 PM                Screen T
+                                                  ranslato
+                                                  r
+d----           8/17/2023  5:48 PM                Segurazo
+d----            8/2/2023 10:42 PM                SingleCe
+                                                  llSoftwa
+                                                  re
+d----            7/6/2024  7:51 PM                Stardock
+d----           8/12/2023  5:13 PM                Steinber
+                                                  g
+d----            8/6/2023  3:05 PM                Toontrac
+                                                  k
+d----           5/24/2022  7:55 PM                tts1.4
+d----            8/6/2023  3:53 PM                UltraISO
+d----           8/26/2023  3:00 PM                VideoLAN
+d----          11/12/2025  2:35 AM                VstPlugi
+                                                  ns
+d----           9/18/2019  3:26 PM                VulkanRT
+d----           8/19/2023 10:52 PM                Wateryki
+                                                  ssxpmSof
+                                                  tware
+d----           7/11/2020  1:11 PM                WildTang
+                                                  ent 
+                                                  Games
+d----           8/19/2025  6:56 PM                Winamp
+d----          12/27/2023 11:54 AM                Windows 
+                                                  Defender
+d----          10/24/2025  3:55 PM                Windows 
+                                                  Kits
+d----          11/16/2023 12:12 AM                Windows 
+                                                  Mail
+d----          12/27/2023 11:54 AM                Windows 
+                                                  Media 
+                                                  Player
+d----           4/27/2024 12:54 AM                Windows 
+                                                  Multimed
+                                                  ia 
+                                                  Platform
+d----           12/7/2019  1:49 AM                Windows 
+                                                  NT
+d----          12/27/2023 11:54 AM                Windows 
+                                                  Photo 
+                                                  Viewer
+d----           4/27/2024 12:54 AM                Windows 
+                                                  Portable
+                                                   Devices
+d----           12/7/2019  1:31 AM                WindowsP
+                                                  owerShel
+                                                  l
+d----           7/30/2024  1:45 PM                Zoom
+

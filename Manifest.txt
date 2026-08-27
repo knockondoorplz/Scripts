@@ -1,0 +1,34 @@
+﻿
+C:\Users\brigi\Documents\Jason\Scripts\Add-LastInstalledToPath.ahk
+C:\Users\brigi\Documents\Jason\Scripts\AddLastCreatedtoStartup.ahk
+C:\Users\brigi\Documents\Jason\Scripts\AppendPalette.ahk
+C:\Users\brigi\Documents\Jason\Scripts\AutoDiff.ahk
+C:\Users\brigi\Documents\Jason\Scripts\ChatGPTWindow.ahk
+C:\Users\brigi\Documents\Jason\Scripts\ClipAppend.ahk
+C:\Users\brigi\Documents\Jason\Scripts\CurrentWindowNewPowershell.ahk
+C:\Users\brigi\Documents\Jason\Scripts\DeleteCurrentWallpaper.ahk
+C:\Users\brigi\Documents\Jason\Scripts\MoveRecurseTopLevel.ahk
+C:\Users\brigi\Documents\Jason\Scripts\GitDiff.ahk
+C:\Users\brigi\Documents\Jason\Scripts\HotkeyRemapShowDesktop.ahk
+C:\Users\brigi\Documents\Jason\Scripts\MusicDownloader.ahk
+C:\Users\brigi\Documents\Jason\Scripts\MyCommands.ahk
+C:\Users\brigi\Documents\Jason\Scripts\PeekatdesktopLR.ahk
+C:\Users\brigi\Documents\Jason\Scripts\ResetAHK.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RestartExplorer.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunExplorer.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunLastModified.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunMemoryFlush.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunNascarahk.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunNascarps1.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RunSaveCSV.ahk
+C:\Users\brigi\Documents\Github\Biome Simulator\Widgets\Ollama\SetOllamaControl.ahk
+C:\Users\brigi\Documents\Jason\Scripts\SetRainmeterLayout.ahk
+C:\Users\brigi\Documents\Jason\Scripts\stacktext_hotkey.ahk
+C:\Users\brigi\Documents\Jason\Scripts\stack_pngs_hotkey.ahk
+C:\Users\brigi\Documents\Jason\Scripts\RegisterScript.ahk
+C:\Users\brigi\Documents\Jason\Scripts\Inspector.ahk
+C:\Users\brigi\Documents\Jason\Scripts\DiffWatcher.ahk
+C:\Users\brigi\Documents\Jason\Scripts\OpenInNotepad.ahk
+C:\Users\brigi\Documents\GitHub\Biome Simulator\Widgets\plasma-sprite\Virescent.ahk
+
+

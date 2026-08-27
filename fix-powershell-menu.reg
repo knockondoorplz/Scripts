@@ -1,0 +1,17 @@
+Windows Registry Editor Version 5.00
+
+; ===== Classic PowerShell (Folder Right-Click) =====
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenPowerShellHere]
+@="Open PowerShell here"
+"Icon"="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenPowerShellHere\command]
+@="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoExit -Command Set-Location '%1'"
+
+; ===== Classic PowerShell (Background Right-Click) =====
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenPowerShellHere]
+@="Open PowerShell here"
+"Icon"="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenPowerShellHere\command]
+@="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoExit -Command Set-Location '%V'"

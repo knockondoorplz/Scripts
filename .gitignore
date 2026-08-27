@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.env
+.venv/
+venv/
+
+# Databases
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Generated outputs
+stacktext.txt
+*.out
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# Large data / vaults
+Documentation/
+Previous Versions/
+data/
+img/
+data_sources.txt
+projects_source_codes.txt
+documentation.txt
+
+# Build artifacts
+dist/
+build/
+
+# Browser artifacts
+*.download
+
+# Large files
+.db-journal
+.~lock
+*.bak
+.aider*

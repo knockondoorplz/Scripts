@@ -1,0 +1,10 @@
+"ProcessName","Id","MainWindowTitle","Path"
+"Code","9532","KnowledgeOS - ThoughtLab - Visual Studio Code","C:\Users\brigi\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+"msedge","6104","KnowledgeOS HUD - Jason - Microsoft​ Edge","C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+"notepad","14848","🔮ReflectionGPT.txt - Notepad","C:\WINDOWS\SysWow64\NOTEPAD.EXE"
+"Obsidian","13760","🎭for chatgpt; - !NTY1T10XYZ - Obsidian v1.11.7","C:\Program Files\Obsidian\Obsidian.exe"
+"Rainmeter","624","C:\Users\brigi\Documents\Rainmeter\Skins\Plantside Fantasy\mii system skin 2\POWER\B.ini","C:\Program Files\Rainmeter\Rainmeter.exe"
+"soffice.bin","17128","LibreOffice 7.6 Document Recovery","C:\Program Files (x86)\LibreOffice\program\soffice.bin"
+"Taskmgr","7568","Task Manager",
+"TextInputHost","4704","Microsoft Text Input Application","C:\WINDOWS\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TextInputHost.exe"
+"WindowsTerminal","17384","PowerShell","C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.23.20211.0_x64__8wekyb3d8bbwe\WindowsTerminal.exe"

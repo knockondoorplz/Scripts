@@ -1,0 +1,23 @@
+[Rainmeter]
+Update=1000
+AccurateText=1
+MouseActionCursor=0
+ClickThrough=1
+
+[Metadata]
+Name=RainbowTaskbar_Tiled
+Author=JasonBoone
+Information=Creative Commons Attribution - Non - Commercial - Share Alike 3.0
+Version=1.0
+
+[Variables]
+
+[MeterBackground]
+Meter=Image
+ImageName=#CURRENTPATH#Rainbow Taskbar.jpg
+W=1366
+H=40
+X=0
+Y=738
+Alpha=255
+DynamicVariables=1

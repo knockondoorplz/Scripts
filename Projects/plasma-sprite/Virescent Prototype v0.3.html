@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Virescent Sprite v0.3</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; overflow: hidden;
+    background: #000;
+    height: 100%; width: 100%;
+  }
+
+  #sprite {
+    position: absolute;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #9affd8, #00a76f 70%, #004d35 100%);
+    box-shadow: 0 0 20px #1affb7, 0 0 40px #1affb7;
+    pointer-events: none;
+    transform-style: preserve-3d;
+  }
+
+  .trail {
+    position: absolute;
+    color: #66ffc4;
+    font-size: 18px;
+    opacity: 0.85;
+    filter: blur(0.5px);
+    pointer-events: none;
+    animation: fadeout 1.4s ease forwards;
+  }
+
+  @keyframes fadeout {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.3); }
+  }
+
+  .shine {
+    position: absolute;
+    width: 8px; height: 80px;
+    background: linear-gradient(to bottom, #cafff2 0%, rgba(0,255,180,0) 100%);
+    filter: blur(3px);
+    pointer-events: none;
+    opacity: 0.9;
+    transform-origin: center;
+    animation: shineFade 0.9s ease-out forwards;
+  }
+
+  @keyframes shineFade {
+    0% { opacity: 0.9; }
+    100% { opacity: 0; transform: scale(0.6); }
+  }
+
+  .streak {
+    position: absolute;
+    width: 60px; height: 4px;
+    background: linear-gradient(to right, rgba(0,255,180,0), #88ffe0, rgba(0,255,180,0));
+    filter: blur(2px);
+    pointer-events: none;
+    opacity: 0.85;
+    animation: streakFade 0.6s ease-out forwards;
+  }
+
+  @keyframes streakFade {
+    0% { opacity: 0.85; }
+    100% { opacity: 0; width: 90px; }
+  }
+</style>
+</head>
+
+<body>
+<div id="sprite"></div>
+
+<script>
+const sprite = document.getElementById("sprite");
+let x = window.innerWidth / 2;
+let y = window.innerHeight / 2;
+
+let vx = (Math.random() - 0.5) * 2;
+let vy = (Math.random() - 0.5) * 2;
+
+const glyphs = ["᚛", "᚜", "ᛝ", "۞", "₪", "✧", "ᚾ", "߷", "౨", "ᔑ", "ﺝ", "ﬡ", "ꭍ", "Ω", "Σ","Ⰹ", "Ⱑ", "Ⰿ", "Ⰴ", "-", "+", "÷", "x", "z"];
+
+let mood = "calm";
+let moodTimer = 0;
+let mouseX = x, mouseY = y;
+
+// gentle mouse tracking bursts
+document.addEventListener("mousemove", e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// main animation loop
+function loop() {
+  const dx = mouseX - x;
+  const dy = mouseY - y;
+  const distToMouse = Math.sqrt(dx*dx + dy*dy);
+
+  moodTimer--;
+  if (moodTimer <= 0) pickMood();
+
+  // occasional curiosity toward the mouse
+  if (mood === "curious" && Math.random() < 0.02) {
+    vx += (dx / distToMouse) * 1.2;
+    vy += (dy / distToMouse) * 1.2;
+  }
+
+  // playful = more randomness
+  if (mood === "playful") {
+    vx += (Math.random() - 0.5) * 0.2;
+    vy += (Math.random() - 0.5) * 0.2;
+
+    if (Math.random() < 0.01) spawnShine(x, y);
+  }
+
+  // mischief = speed bursts
+  if (mood === "mischief") {
+    if (Math.random() < 0.02) spawnStreak(x, y);
+    if (Math.random() < 0.005) spawnLongGlyphTrail(x, y);
+  }
+
+  // wall hugging: glow behind windows effect
+  if (x < 20 || x > window.innerWidth - 20) {
+    if (Math.random() < 0.03) spawnShine(x, y);
+  }
+  if (y < 20 || y > window.innerHeight - 20) {
+    if (Math.random() < 0.03) spawnShine(x, y);
+  }
+
+  x += vx;
+  y += vy;
+
+  // soft screen edges
+  if (x < 0) { x = 0; vx *= -1; }
+  if (x > window.innerWidth) { x = window.innerWidth; vx *= -1; }
+  if (y < 0) { y = 0; vy *= -1; }
+  if (y > window.innerHeight) { y = window.innerHeight; vy *= -1; }
+
+  sprite.style.left = x - 11 + "px";
+  sprite.style.top = y - 11 + "px";
+
+  if (Math.random() < 0.15) spawnGlyphTrail(x, y);
+
+  requestAnimationFrame(loop);
+}
+
+function pickMood() {
+  const choices = ["calm", "curious", "playful", "mischief"];
+  mood = choices[Math.floor(Math.random()*choices.length)];
+  moodTimer = 200 + Math.random()*400;
+}
+
+function spawnGlyphTrail(px, py) {
+  const g = document.createElement("div");
+  g.className = "trail";
+  g.style.left = px + (Math.random()*20-10) + "px";
+  g.style.top = py + (Math.random()*20-10) + "px";
+  g.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+  document.body.appendChild(g);
+  setTimeout(()=>g.remove(),1400);
+}
+
+// rare long tendrils that wrap across large areas
+function spawnLongGlyphTrail(px, py) {
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      spawnGlyphTrail(px + (i*20*(Math.random()-0.5)),
+                      py + (i*20*(Math.random()-0.5)));
+    }, i * 30);
+  }
+}
+
+function spawnShine(px, py) {
+  const s = document.createElement("div");
+  s.className = "shine";
+  s.style.left = (px - 4) + "px";
+  s.style.top = (py - 40) + "px";
+  s.style.transform = `rotate(${Math.random()*180}deg)`;
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),900);
+}
+
+function spawnStreak(px, py) {
+  const s = document.createElement("div");
+  s.className = "streak";
+  s.style.left = (px - 30) + "px";
+  s.style.top = (py - 2) + "px";
+  s.style.transform = `rotate(${Math.random()*360}deg)`;
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),600);
+}
+
+loop();
+</script>
+
+</body>
+</html>

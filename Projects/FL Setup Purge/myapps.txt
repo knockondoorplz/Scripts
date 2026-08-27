@@ -1,0 +1,89 @@
+Directory: C:\Users\brigi\Documents\My Apps
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---            9/1/2025 11:22 AM            608 .tinytask.lnk
+-a---            5/9/2024 12:01 AM           1549 4K Video Downloader+.lnk
+-a---            5/9/2024  7:02 AM           1447 4K YouTube to MP3.lnk
+-a---           8/20/2023 10:12 PM           2196 Add Library.lnk
+-a---          12/26/2023  3:34 PM           1010 ADSR Sample Manager (64 bit).lnk
+-a---           1/30/2022  2:09 AM           1832 Animation Shop Pro.lnk
+-a---           9/24/2025 12:33 PM           1132 calibre 64bit - E-book management.lnk
+-a---          12/17/2025 10:19 AM           2129 CCleaner 7.lnk
+-a---           12/7/2019  1:09 AM           1114 Character Map.lnk
+-a---          11/11/2019 10:28 AM           2345 Chromium.lnk
+-a---            9/1/2025  4:55 PM           1303 cmd.exe.lnk
+-a---            8/6/2023 12:45 PM           1174 Controller Editor.lnk
+-a---           8/16/2023 12:40 AM           1134 Creator Tools.lnk
+-a---            9/7/2025 12:51 AM           1853 CrystalDiskInfo.lnk
+-a---           9/24/2025 12:11 PM           1398 Ditto.lnk
+-a---           9/14/2025 10:27 AM           2848 DriverBooster.exe.lnk
+-a---           8/15/2025  6:53 PM           1092 Everything.lnk
+-a---           12/7/2019  1:08 AM            407 File Explorer.lnk
+-a---           8/28/2025  6:23 PM           2160 FL Studio 2025.lnk
+-a---           3/18/2025 10:12 AM           1069 foobar2000.lnk
+-a---           2/12/2025  7:07 AM          78336 gfie.exe
+-a---            1/8/2025  4:17 AM           1987 Git Bash.lnk
+-a---          11/23/2022  2:59 AM           2367 Google Chrome.lnk
+-a---          10/29/2020 10:53 AM           2068 Google Docs.lnk
+-a---          10/29/2020 10:53 AM           2078 Google Sheets.lnk
+-a---           4/13/2020 12:50 PM           2080 Google Slides.lnk
+-a---           7/11/2024 11:31 PM           1434 Grammarly.lnk
+-a---           4/28/2025  9:40 AM           1009 Greenfish Icon Editor Pro 4.3.lnk
+-a---           6/14/2021  9:30 AM           1030 Guitar Pro 5.lnk
+-a---           8/16/2023  4:43 PM           1124 Guitar Rig 6.lnk
+-a---           8/24/2025 10:45 PM            996 Hidden Windows 10 Features.lnk
+-a---           8/26/2023  2:14 PM           1245 iTunes Duplicate Remover Free 2.3.lnk
+-a---            9/1/2025  3:14 PM           2436 iTunes.lnk
+-a---           8/20/2023 11:16 PM           1094 Kontakt 7.lnk
+-a---           8/18/2023  7:08 PM           1044 KONTAKT Manager.lnk
+-a---           8/20/2023 11:27 PM           1070 Kontakt.lnk
+-a---           1/24/2022  1:35 PM           1830 Krita.lnk
+-a---           7/30/2024  2:08 PM           1161 LibreOffice Calc.lnk
+-a---           7/30/2024  2:08 PM           1183 LibreOffice Writer.lnk
+-a---            9/7/2025 11:37 AM           2342 Logseq.lnk
+-a---           8/17/2023  1:40 PM           2028 Malwarebytes.lnk
+-a---            8/6/2023  1:00 PM           1104 Maschine 2.lnk
+-a---          10/24/2022  1:57 PM       28738560 material_maker.exe
+-a---          11/23/2022  2:59 AM           2383 Microsoft Edge.lnk
+-a---           4/15/2018 11:34 AM           1221 MIDI to MP3 Converter.lnk
+-a---            8/4/2023 10:24 PM           2386 Native Access.lnk
+-a---           5/24/2022  7:55 PM           2801 NaturalReader 16.lnk
+-a---           4/20/2024  5:07 PM           1381 Noi.lnk
+-a---           4/11/2018  4:34 PM           1158 Notepad.lnk
+-a---           9/14/2025 10:21 AM            890 Notepad++.lnk
+-a---          11/25/2025  3:31 PM           1831 Obsidian.lnk
+-a---           6/28/2024  1:07 AM           1221 Open-Shell Menu Settings.lnk
+-a---            4/9/2025  9:37 PM           1391 Opera Browser.lnk
+-a---            9/1/2025  3:28 PM           1720 opera.lnk
+-a---           4/11/2018  4:34 PM           1114 Paint.lnk
+-a---          10/20/2025 11:11 AM           2598 Person 1 - Comet.lnk
+-a---           7/14/2022  4:44 PM            843 PyCharm Community Edition 2022.1.3.lnk
+-a---           6/16/2024  8:01 PM           1754 Rainmeter.lnk
+-a---           8/24/2025  6:10 PM           1165 RainWallpaper.lnk
+-a---            9/9/2025  5:33 PM           1201 Rainy Live Wallpaper Engine.lnk
+-a---           8/20/2023 11:30 PM           1094 Reaktor 6.lnk
+-a---           9/22/2021  1:06 AM           2523 RealEight.lnk
+-a---           4/19/2024  5:57 PM           3139 RealWorld Cursor Editor.lnk
+-a---           8/17/2023  1:57 PM           1086 Revo Uninstaller.lnk
+-a---            6/7/2024  8:44 PM            868 Run Fullscreen.lnk
+-a---          10/17/2020  8:21 PM           2995 Search Powered by Yahoo!.lnk
+-a---            9/9/2025  5:13 PM            862 Shotcut.lnk
+-a---           9/24/2025 11:55 PM            352 Shows Desktop (2).lnk
+-a---           7/18/2023 11:48 AM           2902 SoundCloud.lnk
+-a---           3/18/2025 10:12 AM           1857 Spotify.lnk
+-a---           6/18/2024  4:39 PM           2076 SumatraPDF.lnk
+-a---           12/7/2019  1:08 AM           1120 Task Manager.lnk
+-a---           9/14/2025  9:54 AM            902 TeamViewer Host.lnk
+-a---            1/2/2026  8:05 PM            862 TeamViewer.lnk
+-a---           2/22/2022  8:30 PM           1486 The Sims 3.lnk
+-a---            8/6/2023  3:05 PM           2387 Toontrack solo.lnk
+-a---           6/13/2024  9:19 PM           1425 Visual Studio Code.lnk
+-a---          11/26/2025  6:54 PM           1745 Warp.lnk
+-a---           8/19/2025  6:54 PM           1082 Winamp.lnk
+-a---           9/24/2025 11:55 PM            334 Window Switcher (2).lnk
+-a---           2/14/2022  8:18 PM            976 Windows Movie Maker.lnk
+-a---          10/21/2025 12:23 PM           1470 WindowsApps.lnk
+-a---           8/17/2024  2:19 PM           1069 Windscribe.lnk
+-a---            8/5/2023  1:18 AM           1077 Xfer Serum Standalone.lnk
+-a---            9/7/2025 12:49 AM           2322 Xmind.lnk
