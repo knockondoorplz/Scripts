@@ -1,8 +1,8 @@
 #Requires AutoHotkey v2.0
 
-; Phantom Guard App Launcher
+; Fixed Phantom Guard App Launcher
 SmartLaunch(AppPath, AppName) {
-    ; Rule 1: If computer has been idle > 10 seconds, block phantom background opens
+    ; Rule 1: If computer has been idle > 10 seconds, block background opens
     if (A_TimeIdlePhysical > 10000) {
         ToolTip("BLOCKED Phantom Background Open: " . AppName)
         SetTimer(() => ToolTip(), -3000)
@@ -10,7 +10,8 @@ SmartLaunch(AppPath, AppName) {
     }
 
     ; Rule 2: High-risk apps require Shift key held down to prevent misclicks
-    if (AppName in ["Calibre", "GuitarPro", "Obsidian", "FL Studio", "iTunes" ]) {
+    ; Fixed v2 syntax checking string against list:
+    if RegExMatch(AppName, "i)^(Calibre|GuitarPro|Obsidian|FL Studio|iTunes)$") {
         if !GetKeyState("Shift", "P") {
             ToolTip("Shield Active: Hold SHIFT while opening " . AppName)
             SetTimer(() => ToolTip(), -2500)
@@ -20,6 +21,7 @@ SmartLaunch(AppPath, AppName) {
 
     Run(AppPath)
 }
+
 
 ; Shortcut Overrides (Wrap your app execution here)
 >^>!c:: SmartLaunch("C:\Program Files\Calibre2\calibre.exe", "Calibre")
