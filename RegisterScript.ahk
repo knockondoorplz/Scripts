@@ -16,15 +16,24 @@
                 {
                     Script := item.Path
 
-                    RunWait(
+                    ExitCode := RunWait(
                         'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "' 
                         A_ScriptDir '\IndexScript.ps1" "' Script '"',
                         ,
                         "Hide"
                     )
-
+                    
+                    if (ExitCode != 0)
+                    {
+                        MsgBox "Registration FAILED:`n`n"
+                            . item.Name
+                            . "`n`nPowerShell exit code: "
+                            . ExitCode
+                    
+                        return
+                    }
+                    
                     MsgBox "Registered:`n" item.Name
-                    return
                 }
             }
         }

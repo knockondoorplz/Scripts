@@ -23,16 +23,17 @@ global Buttons         := Map()
 global LastNotePath    := ""
 
 global SpeedDials := Map(
-    1, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\Ambitia\Tools🔧\💻сøмքսէэя⌨️\Desktop Apps\AI Entities\ChatGPT\For ChatGPT\🎭For ChatGPT.md",
+    1, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\Ambitia\Projects\For Agents.md",
     2, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\♟Åcâdэмΐä💡\💿_Ċøðΐηg_💎\Scratchbox\🌤Curricula\Fixed.md",
     3, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\♟Åcâdэмΐä💡\💿_Ċøðΐηg_💎\Scratchbox\Some @%$! Code\Hover Responses.md",
-    4, "",
-    5, "",
-    6, "",
-    7, "",
-    8, "",
-    9, "",
-    0, ""
+    4, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\Ambitia\Tools🔧\💻сøмքսէэя⌨️\Desktop Apps\AI Entities\ChatGPT\Prompts\Prompts.md",
+    5, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\Ambitia\Tools🔧\💻сøмքսէэя⌨️\Desktop Apps\AI Entities\ChatGPT\⚜ArtifactGPT.md",
+    6, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\PR!MA\d1ar!o\🔮¡¡ΣΟΦΙΑ¡📜.md",
+    7, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\PR!MA\d1ar!o\💡🌀.id_ntity. 🍭✨.md",
+    8, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\♟Åcâdэмΐä💡\💿_Ċøðΐηg_💎\Languages\🔵PowerShell\Get-Help $PowerShell -Full.mdl",
+    9, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\PR!MA\d1ar!o\🌛;;om3ga;;🌜.md",
+    0, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\PR!MA\d1ar!o\…things to remember 💭.md",
+    11, "H:\Jason's Files\!NTY1T10XYZ\𐌰𐌹𐍂𐌿𐌽𐍄𐌹𐌲𐌹𐍃\øмegå_🌓\Ambitia\Projects\BiomeOS\Jiggatron\Jiggatron.md"
 )
 
 OnMessage(0x24, WM_GETMINMAXINFO)
@@ -254,6 +255,7 @@ SpeedDial(n)
 ^#8::SpeedDial(8)
 ^#9::SpeedDial(9)
 ^#0::SpeedDial(0)
+^#NumPad1::SpeedDial(11)
 
 ; ==========================
 ; SHOW GUI

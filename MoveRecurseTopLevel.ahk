@@ -8,5 +8,5 @@ for window in ComObjCreate("Shell.Application").Windows
     }
 }
 
-Run powershell -NoProfile -Command "Get-ChildItem '%path%' -Recurse -Filter *.md | Move-Item -Destination '%path%'"
+Run powershell -NoProfile -Command "Get-ChildItem '%path%' -Recurse -Filter *.mov, *.gif, *.m4a, *.mp4, *.mp3, *.txt, *.md, *.ico | Move-Item -Destination '%path%'"
 return

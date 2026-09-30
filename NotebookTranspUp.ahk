@@ -18,7 +18,6 @@ AdjustTransparency(delta) {
     SetTimer(() => ToolTip(), -700)  ; auto-clear tooltip after 0.7s
 }
 
-/*
 #!t::  ; Win+Alt+T toggles transparency on active window
 {
     trans := WinGetTransparent("A")
@@ -27,4 +26,3 @@ AdjustTransparency(delta) {
     else
         WinSetTransparent(255, "A")  ; fully opaque
 }
-*\

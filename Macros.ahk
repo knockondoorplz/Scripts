@@ -18,7 +18,7 @@ SendMode Input
 >^j::Send !{Left}        ; Right Ctrl+J → Back
 return
 >^k::Send !{Right}       ; Right Ctrl+K → Forward
->^i::Send {F2}           ; Right Ctrl+I → Rename
+>^r::Send {F2}           ; Right Ctrl+R → Rename
 
 
 ;===== GLOBAL SYSTEM CONTROL =====
@@ -37,25 +37,55 @@ return
 Return
 
 ;===== HOTSTRINGS / MACROS =====
-::sig::N33DZ1LP⚡
+; C = Case sensitive
+
+:C:AHK::AutoHotkey
+
+:*:needzilp::N33DZ1LP⚡
 :*:jlb0::jlb0467@gmail.com
 :*:knocko::knockondoorplz@gmail.com
 :*:dig0::digital.identifier0@gmail.com
 
+::hte::the
+::hte::the
+::htere::ther
+::hteir::their
+::htought::thought
+:*?:ugth::ught
+:*?:igth::ight
+:*?:nght::ngth
+:*?:nht::nth
+:*?:ehat::what
+::i::I
+::swe::wel
+::asway::away
+::sript::script
+::meanuful::meaningful
+::meanfiulf::meaningful
+::meaninful::meaningful
+::beautuifl::beautiful
+::beautufl::beautiful
+::beautilf::beautiful
+::speicfically::specifically
+::speiciflaly::specifically
+::deisplayed::displayed
+::deaisplayed::displayed
+
 ;===== PERSONAL MACROS =====
-^+!6::
+#!-::
 Send, {Home}{Enter}{Up}-{Space}
 return
 
-^+!7::
+
+>^>!Tab::
 Send, {Space 4}{Left 4}{Down}
 return
 
-^+#7::
+>!Tab::
 Send, {Space 4}
 return
 
-^+!8::
+>^>!>+Tab::
 Clipboard := ""
 Send, ^c
 ClipWait, 1
@@ -68,10 +98,30 @@ for index, line in Lines
     NewText .= "    " line
     if (index < Lines.MaxIndex())
         NewText .= "`n"
-}
 Clipboard := NewText
 Send, ^v
 return
+}
+
+^#!l::
+Send, ^s
+ClipWait, 1
+Send, #!l
+return
+
+^+!x::
+Send, ^s
+ClipWait, 1
+Send, ^#x
+return
+
+^#!x::
+Send, ^#!l
+ClipWait, 1
+Send, ^#x
+return
+
+>^p::Send, +{F10}
 
 ;===== END OF SCRIPT =====
 

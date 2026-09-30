@@ -1,90 +1,57 @@
-; ==========================================
-; Hotkey: Ctrl+Alt+T (Warp Terminal to Current Folder)
-; ==========================================
+; ==============================================================================
+; 1. OPEN TERMINAL AT ACTIVE FILE EXPLORER LOCATION
+; Shortcut: Ctrl + Alt + T
+; ==============================================================================
 ^!t::
-    HandleTerminalRouting(False)
+ExplorerPath := GetActiveExplorerPath()
+if (ExplorerPath != "")
+{
+    Run, wt.exe -d "%ExplorerPath%"
+}
+else
+{
+    Run, wt.exe
+}
 return
 
-; ==========================================
-; Hotkey: Ctrl+Alt+A (Warp Terminal + Auto-Clean Folder)
-; ==========================================
-^!a::
-    HandleTerminalRouting(True)
+
+; ==============================================================================
+; 2. OPEN TERMINAL AT ACTIVE FILE EXPLORER LOCATION (AS ADMIN)
+; Shortcut: Ctrl + Shift + Alt + T
+; ==============================================================================
+^+!t::
+ExplorerPath := GetActiveExplorerPath()
+if (ExplorerPath != "")
+{
+    Run, *RunAs wt.exe -d "%ExplorerPath%"
+}
+else
+{
+    Run, *RunAs wt.exe
+}
 return
 
 
-; ==========================================
-; CORE ROUTING ENGINE (Handles both hotkeys)
-; ==========================================
-HandleTerminalRouting(runAutoCommand) {
-    if WinActive("ahk_class CabinetWClass")
-    {
-        ; 1. Grab the active path from File Explorer
-        WinGetText, windowText, A
-        Loop, Parse, windowText, `n, `r
-        {
-            if (SubStr(A_LoopField, 1, 9) = "Address: ")
-            {
-                dirPath := SubStr(A_LoopField, 10)
-                break
-            }
-        }
-        if (dirPath = "")
-        {
-            for window in ComObjCreate("Shell.Application").Windows
-            {
-                if (window.HWND = WinExist("A"))
-                {
-                    dirPath := window.Document.Folder.Self.Path
-                    break
-                }
-            }
-        }
-        
-        ; 2. CHECK: Is a terminal already running?
-        if WinExist("ahk_exe WindowsTerminal.exe") 
-            or WinExist("ahk_exe powershell.exe") 
-            or WinExist("ahk_exe pwsh.exe")
-        {
-            WinActivate
-            Sleep, 100
-            
-            Send, {Esc}
-            Sleep, 50
-            
-            ; FIX: Separate the path from the Enter keypress
-            Send, cd "{Raw}%dirPath%"
-            Send, {Enter}
-            
-            if (runAutoCommand) {
-                Sleep, 100
-                Send, auto
-                Send, {Enter}
-            }
-        }
-        else
-        {
-            ; 3. If no terminal exists, launch a fresh one
-            Run, wt.exe
-            
-            ; Wait for the new window to become active
-            WinWaitActive, ahk_exe WindowsTerminal.exe,, 3
-            
-            ; Wait for Biome Simulator default path to finish loading
-            Sleep, 800 
-            
-            Send, {Esc}
-            Sleep, 50
-            
-            ; FIX: Separate the path from the Enter keypress here too
-            Send, cd "{Raw}%dirPath%"
-            Send, {Enter}
-            
-            if (runAutoCommand) {
-                Sleep, 100
-                Send, auto
-                Send, {Enter}
+; ==============================================================================
+; 3. PLAIN OLD TERMINAL AS ADMIN (DEFAULT LOCATION / SCRIPTS)
+; Shortcut: Ctrl + Win + T  (Replaces #!t to avoid transparency script conflict)
+; ==============================================================================
+^#t::
+Run, *RunAs wt.exe
+return
+
+
+; ==============================================================================
+; HELPER FUNCTION: GRAB ACTIVE FILE EXPLORER PATH (AHK v1 Compatible)
+; ==============================================================================
+GetActiveExplorerPath() {
+    WinGet, hwnd, ID, A
+    try {
+        for window in ComObjCreate("Shell.Application").Windows {
+            if (window.HWND == hwnd) {
+                return window.Document.Folder.Self.Path
             }
         }
     }
+    return ""
 }

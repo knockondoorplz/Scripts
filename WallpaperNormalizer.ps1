@@ -1,0 +1,1 @@
+schtasks /Create /TN "WallpaperNormalizer" /TR "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"C:\Users\brigi\iCloud Drive\Downloads\Wallpapers\Raw\WatchAndNormalize.ps1`"" /SC ONLOGON /RL LIMITED /F

@@ -66,6 +66,7 @@ ShowCommands()
         [
             "id",
             "Hotkey",
+            "Function",
             "Filename",
             "Created",
             "Modified",
@@ -110,14 +111,34 @@ LoadIndex(LV)
     Data := JSON.parse(FileRead(IndexFile), false, false)
 
     if !IsObject(Data)
-    return
+        return
 
     for script in Data
-
     {
-
-        if script.HasOwnProp("hotkeys")
+        if script.HasOwnProp("bindings")
         {
+            for binding in script.bindings
+            {
+                functionName := ""
+
+                if binding.HasOwnProp("function") && binding.function
+                    functionName := binding.function
+
+                LV.Add(
+                    "",
+                    script.id,
+                    binding.hotkey,
+                    functionName,
+                    script.filename,
+                    script.created,
+                    script.modified,
+                    script.path
+                )
+            }
+        }
+        else if script.HasOwnProp("hotkeys")
+        {
+            ; Backward compatibility with older index entries
 
             for key in script.hotkeys
             {
@@ -125,6 +146,7 @@ LoadIndex(LV)
                     "",
                     script.id,
                     key,
+                    "",
                     script.filename,
                     script.created,
                     script.modified,
@@ -140,6 +162,7 @@ LoadIndex(LV)
     LV.ModifyCol(4, "AutoHdr")
     LV.ModifyCol(5, "AutoHdr")
     LV.ModifyCol(6, "AutoHdr")
+    LV.ModifyCol(7, "AutoHdr")
 }
 
 RefreshList()
@@ -161,7 +184,7 @@ RefreshList()
 
 OpenSelected(LV, Row)
 {
-    path := LV.GetText(Row,6)
+    path := LV.GetText(Row,7)
 
     if FileExist(path)
         Run(

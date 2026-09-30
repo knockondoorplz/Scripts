@@ -30,21 +30,17 @@
         "filename":  "MyCommands.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\MyCommands.ahk",
         "created":  "2026-06-09 16:00:26",
-        "modified":  "2026-07-17 00:14:58",
+        "modified":  "2026-09-09 13:20:10",
         "hotkeys":  [
                         "^+j"
-                    ]
-    },
-    {
-        "id":  4,
-        "filename":  "AppendPalette.ahk",
-        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AppendPalette.ahk",
-        "created":  "2026-06-23 14:12:39",
-        "modified":  "2026-08-07 14:19:23",
-        "hotkeys":  [
-                        "#+a",
-                        "+#!a"
-                    ]
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^+j",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  5,
@@ -123,10 +119,23 @@
         "filename":  "MusicDownloader.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\MusicDownloader.ahk",
         "created":  "2026-03-12 23:43:24",
-        "modified":  "2026-07-31 20:00:48",
+        "modified":  "2026-09-17 01:34:37",
         "hotkeys":  [
-                        "+!p"
-                    ]
+                        "#!y",
+                        "^!v"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "#!y",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^!v",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  13,
@@ -166,10 +175,13 @@
         "filename":  "RemapShowDesktop.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RemapShowDesktop.ahk",
         "created":  "2026-05-29 13:24:29",
-        "modified":  "2026-05-29 13:24:32",
+        "modified":  "2026-09-16 10:40:38",
         "hotkeys":  [
-                        "~LAlt"
-                    ]
+
+                    ],
+        "bindings":  [
+
+                     ]
     },
     {
         "id":  17,
@@ -199,10 +211,23 @@
         "filename":  "RunExplorer.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\RunExplorer.ahk",
         "created":  "2026-05-31 10:41:17",
-        "modified":  "2026-05-31 10:41:18",
+        "modified":  "2026-09-18 12:01:58",
         "hotkeys":  [
-                        "^#!r"
-                    ]
+                        "^#!r",
+                        "#!r"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^#!r",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "#!r",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  20,
@@ -249,11 +274,29 @@
         "filename":  "CurrentWindowNewPowershell.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\CurrentWindowNewPowershell.ahk",
         "created":  "2026-05-16 12:33:59",
-        "modified":  "2026-05-16 15:59:58",
+        "modified":  "2026-09-16 11:24:34",
         "hotkeys":  [
                         "^!t",
-                        "^!a"
-                    ]
+                        "^+!t",
+                        "^#t"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^!t",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^+!t",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#t",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  25,
@@ -291,37 +334,33 @@
                     ]
     },
     {
-        "id":  27,
-        "filename":  "stack_pngs_hotkey.ahk",
-        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\stack_pngs_hotkey.ahk",
-        "created":  "2026-03-03 11:59:21",
-        "modified":  "2026-03-01 22:22:41",
-        "hotkeys":  [
-                        "^!`"
-                    ]
-    },
-    {
-        "id":  28,
-        "filename":  "stacktext_hotkey.ahk",
-        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\stacktext_hotkey.ahk",
-        "created":  "2026-02-26 00:28:30",
-        "modified":  "2026-06-26 17:00:34",
-        "hotkeys":  [
-                        "^+`",
-                        "^+#`"
-                    ]
-    },
-    {
         "id":  29,
         "filename":  "DisplayToDo.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\DisplayToDo.ahk",
         "created":  "2026-08-01 08:37:51",
-        "modified":  "2026-08-06 23:35:15",
+        "modified":  "2026-09-10 12:16:24",
         "hotkeys":  [
-                        "^+!j",
-                        "^#j",
-                        "+!j"
-                    ]
+                        "\u003c#\u003c!j",
+                        "\u003c^\u003c#j",
+                        "\u003c+\u003c!j"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "\u003c#\u003c!j",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003c^\u003c#j",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003c+\u003c!j",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  30,
@@ -375,10 +414,10 @@
         "filename":  "ChronologBridge.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\GitHub\\Biome Simulator\\Widgets\\BiomeCore\\ChronologBridge.ahk",
         "created":  "2026-06-17 16:53:28",
-        "modified":  "2026-08-13 00:25:43",
+        "modified":  "2026-08-31 23:45:15",
         "hotkeys":  [
                         "^#b",
-                        "#!q",
+                        "^#q",
                         "^#s"
                     ]
     },
@@ -387,13 +426,14 @@
         "filename":  "AnywhereCommands.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AnywhereCommands.ahk",
         "created":  "2026-08-08 13:42:30",
-        "modified":  "2026-08-13 00:42:15",
+        "modified":  "2026-09-07 21:00:41",
         "hotkeys":  [
                         "^#!1",
                         "^#!2",
                         "^#!3",
                         "^#!4",
                         "^#!5",
+                        "^#!6",
                         "^#!7",
                         "^#!8",
                         "^#!9",
@@ -401,9 +441,41 @@
                         "^+#1",
                         "^+#2",
                         "^+#3",
-                        "^+#z",
-                        "^+#n",
-                        "^+0"
+                        "^+#4",
+                        "^+#5",
+                        "^+#6",
+                        "^+#7",
+                        "^+#8",
+                        "^+#9",
+                        "^+!0",
+                        "^+!1",
+                        "^+!2",
+                        "^+!3",
+                        "^+!4",
+                        "^+!5",
+                        "^+!6",
+                        "^+!7",
+                        "^+!8",
+                        "^+!9",
+                        "#!0",
+                        "#!1",
+                        "#!2",
+                        "#!3",
+                        "#!4",
+                        "#!5",
+                        "#!6",
+                        "#!7",
+                        "#!8",
+                        "^!1",
+                        "^!2",
+                        "^!3",
+                        "^!4",
+                        "^!5",
+                        "^!6",
+                        "^!7",
+                        "^!8",
+                        "^!9",
+                        "^!0"
                     ]
     },
     {
@@ -411,23 +483,113 @@
         "filename":  "Macros.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Macros.ahk",
         "created":  "2026-08-12 15:08:48",
-        "modified":  "2026-08-13 00:16:13",
+        "modified":  "2026-09-16 08:44:58",
         "hotkeys":  [
                         "\u003e^j",
                         "\u003e^k",
-                        "\u003e^i",
+                        "\u003e^r",
                         "+#R",
                         "+#P",
-                        "^#!x",
+                        "^#x",
                         "^#Left",
                         "^#Right",
                         "^!F",
-                        "^+!6",
-                        "^+!7",
-                        "^+#7",
-                        "^+!8",
+                        "\u003e^\u003e!Tab",
+                        "\u003e!Tab",
+                        "\u003e^\u003e!\u003e+Tab",
+                        "^#!l",
+                        "^+!x",
+                        "^#!x",
+                        "\u003e^p",
                         "+!F"
-                    ]
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "\u003e^j",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e^k",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e^r",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "+#R",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "+#P",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#x",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#Left",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#Right",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^!F",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e^\u003e!Tab",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e!Tab",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e^\u003e!\u003e+Tab",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#!l",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^+!x",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "^#!x",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "\u003e^p",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "+!F",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
     },
     {
         "id":  36,
@@ -450,16 +612,6 @@
                     ]
     },
     {
-        "id":  38,
-        "filename":  "NotebookGradientFill.ahk",
-        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\NotebookGradientFill.ahk",
-        "created":  "2026-08-20 01:42:10",
-        "modified":  "2026-08-20 19:21:50",
-        "hotkeys":  [
-                        "#!g"
-                    ]
-    },
-    {
         "id":  39,
         "filename":  "Inspector.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Inspector.ahk",
@@ -472,39 +624,267 @@
     },
     {
         "id":  40,
+        "filename":  "AddLastCreatedtoStartup.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\AddLastCreatedtoStartup.ahk",
+        "created":  "2026-06-15 20:11:09",
+        "modified":  "2026-06-18 14:58:52",
+        "hotkeys":  [
+                        "#!s"
+                    ]
+    },
+    {
+        "id":  41,
+        "filename":  "StartBiome.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\StartBiome.ahk",
+        "created":  "2026-08-31 21:09:17",
+        "modified":  "2026-08-31 23:34:06",
+        "hotkeys":  [
+                        "\u003e^b"
+                    ]
+    },
+    {
+        "id":  42,
+        "filename":  "SystemPowerSuite.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\SystemPowerSuite.ahk",
+        "created":  "2026-09-16 02:56:00",
+        "modified":  "2026-09-16 10:34:57",
+        "hotkeys":  [
+                        "^`",
+                        "!`",
+                        "#`",
+                        "#!`"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^`",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "!`",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "#`",
+                             "function":  null,
+                             "type":  "inline"
+                         },
+                         {
+                             "hotkey":  "#!`",
+                             "function":  null,
+                             "type":  "inline"
+                         }
+                     ]
+    },
+    {
+        "id":  43,
+        "filename":  "WallpaperPlayer.ahk",
+        "path":  "C:\\Users\\brigi\\iCloudDrive\\Downloads\\Wallpapers\\Clips\\WallpaperPlayer.ahk",
+        "created":  "2026-09-16 08:16:33",
+        "modified":  "2026-09-16 09:07:14",
+        "hotkeys":  [
+                        "^!g",
+                        "^!NumPad1",
+                        "^!NumPad2",
+                        "^!Left",
+                        "^!Right",
+                        "^!+Left",
+                        "^!+Right",
+                        "^!Space",
+                        "^!r"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^!g",
+                             "function":  "ToggleAll",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!NumPad1",
+                             "function":  "ToggleMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!NumPad2",
+                             "function":  "ToggleMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!Left",
+                             "function":  "SendCmdToMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!Right",
+                             "function":  "SendCmdToMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!+Left",
+                             "function":  "SendCmdToMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!+Right",
+                             "function":  "SendCmdToMonitor",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!Space",
+                             "function":  "BroadcastCmd",
+                             "type":  "function"
+                         },
+                         {
+                             "hotkey":  "^!r",
+                             "function":  "BroadcastCmd",
+                             "type":  "function"
+                         }
+                     ]
+    },
+    {
+        "id":  44,
+        "filename":  "PostIts.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\PostIts.ahk",
+        "created":  "2026-09-18 11:57:13",
+        "modified":  "2026-09-18 16:34:04",
+        "hotkeys":  [
+                        "MButton"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "MButton",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
+    },
+    {
+        "id":  45,
         "filename":  "FocusGuard.ahk",
         "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\FocusGuard.ahk",
         "created":  "2026-08-27 13:36:00",
-        "modified":  "2026-08-27 13:36:01",
+        "modified":  "2026-09-02 00:56:47",
         "hotkeys":  [
-                        "~*a",
-                        "~*b",
-                        "~*c",
-                        "~*d",
-                        "~*e",
-                        "~*f",
-                        "~*g",
-                        "~*h",
-                        "~*i",
-                        "~*j",
-                        "~*k",
-                        "~*l",
-                        "~*m",
-                        "~*n",
-                        "~*o",
-                        "~*p",
-                        "~*q",
-                        "~*r",
-                        "~*s",
-                        "~*t",
-                        "~*u",
-                        "~*v",
-                        "~*w",
-                        "~*x",
-                        "~*y",
-                        "~*z",
-                        "~*Space",
-                        "~*Backspace"
-                    ]
+
+                    ],
+        "bindings":  [
+
+                     ]
+    },
+    {
+        "id":  46,
+        "filename":  "stacktext_hotkey.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Projects\\Stack\\stacktext_hotkey.ahk",
+        "created":  "2026-02-26 00:22:08",
+        "modified":  "2026-09-25 17:36:55",
+        "hotkeys":  [
+                        "^+`",
+                        "^+!`"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^+`",
+                             "function":  null,
+                             "type":  "block"
+                         },
+                         {
+                             "hotkey":  "^+!`",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
+    },
+    {
+        "id":  47,
+        "filename":  "stackpngs_hotkey.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\Projects\\Stack\\stackpngs_hotkey.ahk",
+        "created":  "2026-09-25 17:33:45",
+        "modified":  "2026-09-25 17:40:11",
+        "hotkeys":  [
+                        "^!`",
+                        "^+#`"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^!`",
+                             "function":  null,
+                             "type":  "block"
+                         },
+                         {
+                             "hotkey":  "^+#`",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
+    },
+    {
+        "id":  48,
+        "filename":  "DiffSelect.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\DiffSelect.ahk",
+        "created":  "2026-09-25 20:25:48",
+        "modified":  "2026-09-25 20:28:47",
+        "hotkeys":  [
+                        "^#d",
+                        "^+!d",
+                        "^+#d"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "^#d",
+                             "function":  null,
+                             "type":  "block"
+                         },
+                         {
+                             "hotkey":  "^+!d",
+                             "function":  null,
+                             "type":  "block"
+                         },
+                         {
+                             "hotkey":  "^+#d",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
+    },
+    {
+        "id":  49,
+        "filename":  "EmergencyOps.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\EmergencyOps.ahk",
+        "created":  "2026-09-25 16:30:33",
+        "modified":  "2026-09-25 17:01:31",
+        "hotkeys":  [
+                        "\u003e^\u003e!o",
+                        "\u003e^\u003e!m"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "\u003e^\u003e!o",
+                             "function":  null,
+                             "type":  "block"
+                         },
+                         {
+                             "hotkey":  "\u003e^\u003e!m",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
+    },
+    {
+        "id":  50,
+        "filename":  "FocusGuardv2.ahk",
+        "path":  "C:\\Users\\brigi\\Documents\\Jason\\Scripts\\FocusGuardv2.ahk",
+        "created":  "2026-09-25 16:36:24",
+        "modified":  "2026-09-25 20:30:51",
+        "hotkeys":  [
+                        "#!f"
+                    ],
+        "bindings":  [
+                         {
+                             "hotkey":  "#!f",
+                             "function":  null,
+                             "type":  "block"
+                         }
+                     ]
     }
 ]

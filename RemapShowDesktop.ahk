@@ -1,16 +1,14 @@
-; 1. TAP LEFT ALT TWICE TO SHOW DESKTOP (MINIMIZE ALL)
-~LAlt::
-if (A_PriorHotkey = "~LAlt" and A_TimeSincePriorHotkey < 400)
+; Hold Right Click and scroll Down to Minimize All
+RButton & WheelDown::
 {
     Send, #m
 }
 return
 
-; 2. PRESS BOTH ALTS TO RESUME DESKTOP (RESTORE ALL)
-LAlt & RAlt::
+; Hold Right Click and scroll Up to Restore All
+RButton & WheelUp::Send, +#mt::
 Send, +#m
 return
 
-RAlt & LAlt::
-Send, +#m
-return
+; Restore normal right-click when clicked alone
+RButton::Click, Right
